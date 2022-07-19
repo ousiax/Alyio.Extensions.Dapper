@@ -23,10 +23,14 @@ public class RepositoryTest
     }
 
     [Fact]
-    public async Task TestSelectAsync()
+    public async Task TestCRUDAsync()
     {
         var genreRepo = Services.GetRequiredService<IRepository<Genre, int>>();
-        await genreRepo.SelectByIdAsync(1);
         await genreRepo.SelectAllAsync();
+        var genre = await genreRepo.SelectByIdAsync(1);
+        genre.Name = "Hello World";
+        await genreRepo.UpdateAsync(genre);
+        genre = await genreRepo.SelectByIdAsync(1);
+        Assert.Equal("Hello World", genre.Name);
     }
 }
