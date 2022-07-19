@@ -9,7 +9,7 @@ namespace Dapper.Extensions.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA5369:Use XmlReader for 'XmlSerializer.Deserialize()'", Justification = "<Pending>")]
         public ConfigurationProvider(IHostingEnvironment hostingEnvironment)
         {
-            var configPath = Path.Combine(hostingEnvironment.ContentRootPath, "configuration.xml");
+            var configPath = Path.Combine(hostingEnvironment.ContentRootPath, "dapper.xml");
             using var configXml = new FileStream(configPath, FileMode.Open);
 
             Configuration = (Configuration)new XmlSerializer(typeof(Configuration)).Deserialize(configXml);
