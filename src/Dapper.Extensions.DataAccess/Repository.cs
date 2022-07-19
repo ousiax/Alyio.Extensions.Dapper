@@ -33,7 +33,7 @@
         {
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
             var def = _mapperProvider.InsertDefinitions[nameof(InsertAsync)];
-            var cmdDef = new CommandDefinition(commandText: def.Sql, cancellationToken: cancellationToken);
+            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: entity, cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
         }
 
@@ -52,9 +52,7 @@
         {
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
             var def = _mapperProvider.UpdateDefinitions[nameof(UpdateAsync)];
-            var queryParams = new DynamicParameters();
-            queryParams.Add(def.IdName, entity);
-            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: queryParams, cancellationToken: cancellationToken);
+            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: entity, cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
         }
     }
