@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Extensions.DataAcces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Extensions.DataAccess.Sqlite", "src\Dapper.Extensions.DataAccess.Sqlite\Dapper.Extensions.DataAccess.Sqlite.csproj", "{EA741E0A-2932-48F0-A047-640ECFF6E5D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{93C15205-E251-4291-AA06-B92D458432F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Extensions.DataAccess.Sqlite.Tests", "test\Dapper.Extensions.DataAccess.Sqlite.Tests\Dapper.Extensions.DataAccess.Sqlite.Tests.csproj", "{FFC430FD-E3BC-4BBA-8076-7A958EFC7366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +36,15 @@ Global
 		{EA741E0A-2932-48F0-A047-640ECFF6E5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA741E0A-2932-48F0-A047-640ECFF6E5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA741E0A-2932-48F0-A047-640ECFF6E5D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC430FD-E3BC-4BBA-8076-7A958EFC7366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC430FD-E3BC-4BBA-8076-7A958EFC7366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC430FD-E3BC-4BBA-8076-7A958EFC7366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC430FD-E3BC-4BBA-8076-7A958EFC7366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5A208516-0938-43B5-9545-B301E2E0AF3B} = {3B5DFD53-A7A8-4402-9788-864F2A460B5F}
 		{104D1372-35A9-4621-94C3-43E35F43F7A9} = {3B5DFD53-A7A8-4402-9788-864F2A460B5F}
 		{EA741E0A-2932-48F0-A047-640ECFF6E5D7} = {3B5DFD53-A7A8-4402-9788-864F2A460B5F}
+		{FFC430FD-E3BC-4BBA-8076-7A958EFC7366} = {93C15205-E251-4291-AA06-B92D458432F9}
 	EndGlobalSection
 EndGlobal

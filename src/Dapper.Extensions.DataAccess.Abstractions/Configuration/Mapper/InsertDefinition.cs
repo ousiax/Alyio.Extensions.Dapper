@@ -5,7 +5,7 @@ namespace Dapper.Extensions.DataAccess
     /// <summary>
     /// A mapped INSERT statement.
     /// </summary>
-    [XmlRoot("select")]
+    [XmlRoot("insert")]
     public sealed class InsertDefinition
     {
         /// <summary>

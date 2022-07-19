@@ -1,6 +1,6 @@
 ﻿namespace Dapper.Extensions.DataAccess
 {
-    internal sealed class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : IEntity<TId>, new()
+    internal sealed class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, new()
     {
         private readonly IDbConnectionFactory _connectionFactory;
         private readonly IMapperProvider<TEntity, TId> _mapperProvider;

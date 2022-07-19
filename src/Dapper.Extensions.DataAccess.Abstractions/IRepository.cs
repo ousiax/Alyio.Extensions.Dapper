@@ -3,7 +3,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public interface IRepository<TEntity, TId> where TEntity : IEntity<TId>, new()
+    public interface IRepository<TEntity, TId> where TEntity : class, new()
     {
         /// <summary>
         /// 

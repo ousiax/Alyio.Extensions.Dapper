@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <mappers>
+        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Genre, Dapper.Extensions.DataAccess.Sqlite.Tests" name="Dapper.Extensions.DataAccess.Sqlite.Tests.Mappers.Genre.xml"></mapper>
+    </mappers>
+</configuration>

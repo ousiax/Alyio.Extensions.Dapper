@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper>
+    <select id="SelectByIdAsync" idName="GenreId">SELECT GenreId, Name FROM Genre WHERE GenreId = @GenreId</select>
+    <select id="SelectAllAsync" idName="GenreId">SELECT GenreId, Name FROM Genre</select>
+    <insert id="InsertAsync">INSERT Genre(GenreId, Name) values (@GenreId, @Name)</insert>
+    <insert id="DeleteAsync">DELETE FROM Genre WHERE GenreId = @GenreId</insert>
+    <insert id="UpdateAsync">UPDATE Genre SET NAME = @Name WHERE GenreId = @GenreId</insert>
+</mapper>

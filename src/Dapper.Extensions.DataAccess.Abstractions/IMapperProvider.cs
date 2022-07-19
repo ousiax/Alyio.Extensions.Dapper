@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the definition of mapped SQL statements.
     /// </summary>
-    public interface IMapperProvider<TEntity, TId> where TEntity : IEntity<TId>, new()
+    public interface IMapperProvider<TEntity, TId> where TEntity : class, new()
     {
         /// <summary>
         /// 

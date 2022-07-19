@@ -1,6 +1,6 @@
 ﻿namespace Dapper.Extensions.DataAccess
 {
-    internal sealed class MapperProvider<TEntity, TId> : IMapperProvider<TEntity, TId> where TEntity : IEntity<TId>, new()
+    internal sealed class MapperProvider<TEntity, TId> : IMapperProvider<TEntity, TId> where TEntity : class, new()
     {
         public MapperProvider(IConfigurationProvider configurationProvider)
         {
