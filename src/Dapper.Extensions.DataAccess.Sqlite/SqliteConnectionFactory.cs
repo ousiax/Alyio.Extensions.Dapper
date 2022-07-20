@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Dapper.Extensions.DataAccess
 {
-    internal sealed class SqliteConnectionFactory : IDbConnectionFactory
+    internal sealed class SqliteConnectionFactory : IConnectionFactory
     {
         private readonly IOptions<SqliteConnectionOptions> _options;
 

@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, string configurationPath = "dapper.xml")
         {
             services.AddRepository(configurationPath)
-                .AddSingleton<IDbConnectionFactory, SqliteConnectionFactory>();
+                .AddSingleton<IConnectionFactory, SqliteConnectionFactory>();
 
             return services;
         }

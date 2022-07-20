@@ -5,7 +5,7 @@ namespace Dapper.Extensions.DataAccess
     /// <summary>
     /// 
     /// </summary>
-    public interface IDbConnectionFactory
+    public interface IConnectionFactory
     {
         /// <summary>
         /// 

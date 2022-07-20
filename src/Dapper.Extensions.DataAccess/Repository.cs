@@ -2,10 +2,10 @@
 {
     internal sealed class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, new()
     {
-        private readonly IDbConnectionFactory _connectionFactory;
+        private readonly IConnectionFactory _connectionFactory;
         private readonly IMapperProvider<TEntity, TId> _mapperProvider;
 
-        public Repository(IDbConnectionFactory connectionFactory, IMapperProvider<TEntity, TId> mapperProvider)
+        public Repository(IConnectionFactory connectionFactory, IMapperProvider<TEntity, TId> mapperProvider)
         {
             _connectionFactory = connectionFactory;
             _mapperProvider = mapperProvider;
