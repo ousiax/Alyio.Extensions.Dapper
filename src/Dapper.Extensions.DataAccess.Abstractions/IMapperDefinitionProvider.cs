@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the definition of mapped SQL statements.
     /// </summary>
-    public interface IMapperProvider<TEntity, TId> where TEntity : class, new()
+    public interface IMapperDefinitionProvider<TEntity, TId> where TEntity : class, new()
     {
         /// <summary>
         /// 
@@ -11,7 +11,7 @@
         /// <param name="id"></param>
         /// <param name="definition"></param>
         /// <returns></returns>
-        bool TryFindSelectDefinition(string id, out SelectDefinition definition);
+        bool TryFindSelect(string id, out SelectDefinition definition);
 
         /// <summary>
         /// 
@@ -19,7 +19,7 @@
         /// <param name="id"></param>
         /// <param name="definition"></param>
         /// <returns></returns>
-        bool TryFindInsertDefinition(string id, out InsertDefinition definition);
+        bool TryFindInsert(string id, out InsertDefinition definition);
 
         /// <summary>
         /// 
@@ -27,7 +27,7 @@
         /// <param name="id"></param>
         /// <param name="definition"></param>
         /// <returns></returns>
-        bool TryFindDeleteDefinition(string id, out DeleteDefinition definition);
+        bool TryFindDelete(string id, out DeleteDefinition definition);
 
         /// <summary>
         /// 
@@ -35,6 +35,6 @@
         /// <param name="id"></param>
         /// <param name="definition"></param>
         /// <returns></returns>
-        bool TryFindUpdateDefinition(string id, out UpdateDefinition definition);
+        bool TryFindUpdate(string id, out UpdateDefinition definition);
     }
 }

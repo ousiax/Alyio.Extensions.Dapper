@@ -3,9 +3,9 @@
     internal sealed class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, new()
     {
         private readonly IConnectionFactory _connectionFactory;
-        private readonly IMapperProvider<TEntity, TId> _mapperProvider;
+        private readonly IMapperDefinitionProvider<TEntity, TId> _mapperProvider;
 
-        public Repository(IConnectionFactory connectionFactory, IMapperProvider<TEntity, TId> mapperProvider)
+        public Repository(IConnectionFactory connectionFactory, IMapperDefinitionProvider<TEntity, TId> mapperProvider)
         {
             _connectionFactory = connectionFactory;
             _mapperProvider = mapperProvider;
@@ -13,7 +13,7 @@
 
         public async Task<TEntity> SelectByIdAsync(TId id, CancellationToken cancellationToken = default)
         {
-            if (!_mapperProvider.TryFindSelectDefinition(nameof(SelectByIdAsync), out var def))
+            if (!_mapperProvider.TryFindSelect(nameof(SelectByIdAsync), out var def))
             {
                 throw new ArgumentException($"The given id '{nameof(SelectByIdAsync)}' was not present in the mapper.");
             }
@@ -26,7 +26,7 @@
 
         public async Task<IEnumerable<TEntity>> SelectAllAsync(CancellationToken cancellationToken = default)
         {
-            if (!_mapperProvider.TryFindSelectDefinition(nameof(SelectAllAsync), out var def))
+            if (!_mapperProvider.TryFindSelect(nameof(SelectAllAsync), out var def))
             {
                 throw new ArgumentException($"The given id '{nameof(SelectAllAsync)}' was not present in the mapper.");
             }
@@ -37,7 +37,7 @@
 
         public async Task<int> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            if (!_mapperProvider.TryFindInsertDefinition(nameof(InsertAsync), out var def))
+            if (!_mapperProvider.TryFindInsert(nameof(InsertAsync), out var def))
             {
                 throw new ArgumentException($"The given id '{nameof(InsertAsync)}' was not present in the mapper.");
             }
@@ -48,7 +48,7 @@
 
         public async Task<int> DeleteAsync(TId id, CancellationToken cancellationToken = default)
         {
-            if (!_mapperProvider.TryFindDeleteDefinition(nameof(DeleteAsync), out var def))
+            if (!_mapperProvider.TryFindDelete(nameof(DeleteAsync), out var def))
             {
                 throw new ArgumentException($"The given id '{nameof(DeleteAsync)}' was not present in the mapper.");
             }
@@ -62,7 +62,7 @@
 
         public async Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
-            if (!_mapperProvider.TryFindUpdateDefinition(nameof(UpdateAsync), out var def))
+            if (!_mapperProvider.TryFindUpdate(nameof(UpdateAsync), out var def))
             {
                 throw new ArgumentException($"The given id '{nameof(UpdateAsync)}' was not present in the mapper.");
             }

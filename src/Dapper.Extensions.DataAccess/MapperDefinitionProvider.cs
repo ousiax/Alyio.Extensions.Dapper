@@ -1,6 +1,6 @@
 ﻿namespace Dapper.Extensions.DataAccess
 {
-    internal sealed class MapperProvider<TEntity, TId> : IMapperProvider<TEntity, TId> where TEntity : class, new()
+    internal sealed class MapperDefinitionProvider<TEntity, TId> : IMapperDefinitionProvider<TEntity, TId> where TEntity : class, new()
     {
         private IDictionary<string, SelectDefinition> SelectDefinitions { get; }
 
@@ -10,7 +10,7 @@
 
         private IDictionary<string, UpdateDefinition> UpdateDefinitions { get; }
 
-        public MapperProvider(IConfigurationProvider configurationProvider)
+        public MapperDefinitionProvider(IConfigurationProvider configurationProvider)
         {
             if (configurationProvider.Mappers.TryGetValue(typeof(TEntity), out var mapper))
             {
@@ -25,22 +25,22 @@
             }
         }
 
-        public bool TryFindSelectDefinition(string id, out SelectDefinition definition)
+        public bool TryFindSelect(string id, out SelectDefinition definition)
         {
             return SelectDefinitions.TryGetValue(id, out definition);
         }
 
-        public bool TryFindInsertDefinition(string id, out InsertDefinition definition)
+        public bool TryFindInsert(string id, out InsertDefinition definition)
         {
             return InsertDefinitions.TryGetValue(id, out definition);
         }
 
-        public bool TryFindDeleteDefinition(string id, out DeleteDefinition definition)
+        public bool TryFindDelete(string id, out DeleteDefinition definition)
         {
             return DeleteDefinitions.TryGetValue(id, out definition);
         }
 
-        public bool TryFindUpdateDefinition(string id, out UpdateDefinition definition)
+        public bool TryFindUpdate(string id, out UpdateDefinition definition)
         {
             return UpdateDefinitions.TryGetValue(id, out definition);
         }
