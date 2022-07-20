@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <mappers>
-        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Genre, Dapper.Extensions.DataAccess.Sqlite.Tests" name="Dapper.Extensions.DataAccess.Sqlite.Tests.Mappers.Genre.xml"></mapper>
-        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Artist, Dapper.Extensions.DataAccess.Sqlite.Tests" name="Dapper.Extensions.DataAccess.Sqlite.Tests.Mappers.Artist.xml"></mapper>
+        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Genre, Dapper.Extensions.DataAccess.Sqlite.Tests"></mapper>
+        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Artist, Dapper.Extensions.DataAccess.Sqlite.Tests"></mapper>
     </mappers>
 </configuration>

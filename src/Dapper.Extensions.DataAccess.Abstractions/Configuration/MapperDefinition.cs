@@ -18,7 +18,8 @@ namespace Dapper.Extensions.DataAccess
         /// <summary>
         /// Gets or sets the case-sensitive name of the manifest resource being requested.
         /// </summary>
+        /// <remarks>If not provided, it will be built with {Type.Namespace}.{Type.Name}.xml.</remarks>
         [XmlAttribute("name")]
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
     }
 }
