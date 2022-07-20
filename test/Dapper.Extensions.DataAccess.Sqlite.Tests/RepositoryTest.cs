@@ -26,11 +26,26 @@ public class RepositoryTest
     public async Task TestCRUDAsync()
     {
         var genreRepo = Services.GetRequiredService<IRepository<Genre, int>>();
-        await genreRepo.SelectAllAsync();
+        var genres = await genreRepo.SelectAllAsync();
+        Assert.Equal(25, genres.Count());
+
         var genre = await genreRepo.SelectByIdAsync(1);
+        Assert.Equal("Rock", genre.Name);
+
         genre.Name = "Hello World";
         await genreRepo.UpdateAsync(genre);
+
         genre = await genreRepo.SelectByIdAsync(1);
         Assert.Equal("Hello World", genre.Name);
+
+        var genre2 = new Genre { GenreId = 26, Name = "您好世界" };
+        await genreRepo.InsertAsync(genre2);
+        var genre3 = await genreRepo.SelectByIdAsync(26);
+        Assert.Equal(genre2.GenreId, genre3.GenreId);
+        Assert.Equal(genre2.Name, genre3.Name);
+
+        var artistRepo = Services.GetRequiredService<IRepository<Artist, int>>();
+        var artists = await artistRepo.SelectAllAsync();
+        Assert.Equal(275, artists.Count());
     }
 }
