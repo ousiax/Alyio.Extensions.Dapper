@@ -4,12 +4,17 @@
     {
         public MapperProvider(IConfigurationProvider configurationProvider)
         {
-            var mapper = configurationProvider.Mappers[typeof(TEntity)];
-            // TODO mapper may be null.
-            SelectDefinitions = mapper.SelectDefinitions.ToDictionary(k => k.Id, v => v);
-            InsertDefinitions = mapper.InsertDefinitions.ToDictionary(k => k.Id, v => v);
-            DeleteDefinitions = mapper.DeleteDefinitions.ToDictionary(k => k.Id, v => v);
-            UpdateDefinitions = mapper.UpdateDefinitions.ToDictionary(k => k.Id, v => v);
+            if (configurationProvider.Mappers.TryGetValue(typeof(TEntity), out var mapper))
+            {
+                SelectDefinitions = mapper.SelectDefinitions.ToDictionary(k => k.Id, v => v);
+                InsertDefinitions = mapper.InsertDefinitions.ToDictionary(k => k.Id, v => v);
+                DeleteDefinitions = mapper.DeleteDefinitions.ToDictionary(k => k.Id, v => v);
+                UpdateDefinitions = mapper.UpdateDefinitions.ToDictionary(k => k.Id, v => v);
+            }
+            else
+            {
+                throw new ArgumentException($"The mapper of type `{typeof(TEntity)}` was not defined, please check dapper configuration.");
+            }
         }
 
         public IDictionary<string, SelectDefinition> SelectDefinitions { get; }
