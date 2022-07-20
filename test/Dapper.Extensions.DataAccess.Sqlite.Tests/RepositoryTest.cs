@@ -23,7 +23,7 @@ public class RepositoryTest
     }
 
     [Fact]
-    public async Task TestCRUDAsync()
+    public async Task TestGenreArtistCRUDAsync()
     {
         var genreRepo = Services.GetRequiredService<IRepository<Genre, int>>();
         var genres = await genreRepo.SelectAllAsync();
@@ -47,5 +47,12 @@ public class RepositoryTest
         var artistRepo = Services.GetRequiredService<IRepository<Artist, int>>();
         var artists = await artistRepo.SelectAllAsync();
         Assert.Equal(275, artists.Count());
+    }
+
+    [Fact]
+    public Task TestAlbumThrowArgumentExceptionAsync()
+    {
+        Assert.Throws<ArgumentException>(() => Services.GetRequiredService<IRepository<Album, int>>());
+        return Task.CompletedTask;
     }
 }
