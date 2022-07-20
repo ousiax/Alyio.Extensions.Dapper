@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="dapper.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="*dapper.xml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="Chinook.sqlite" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
