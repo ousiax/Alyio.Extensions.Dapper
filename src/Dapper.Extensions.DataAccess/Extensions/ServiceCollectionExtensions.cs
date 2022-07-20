@@ -11,11 +11,17 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="configurationPath">The path of dapper configuration.</param>
         /// <returns></returns>
-        public static IServiceCollection AddRepository(this IServiceCollection services)
+        public static IServiceCollection AddRepository(this IServiceCollection services, string configurationPath)
         {
-            services.AddSingleton<IConfigurationProvider, ConfigurationProvider>()
-                .AddSingleton(typeof(IMapperProvider<,>), typeof(MapperProvider<,>))
+            if (configurationPath == null)
+            {
+                throw new ArgumentNullException(nameof(configurationPath));
+            }
+
+            services.AddSingleton(typeof(IConfigurationProvider), new ConfigurationProvider(configurationPath));
+            services.AddSingleton(typeof(IMapperProvider<,>), typeof(MapperProvider<,>))
                 .AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
             return services;
         }

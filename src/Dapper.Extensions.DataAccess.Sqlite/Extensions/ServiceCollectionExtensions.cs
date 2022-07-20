@@ -11,10 +11,11 @@ namespace Microsoft.Extensions.DependencyInjection
         /// 
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="configurationPath"></param>
         /// <returns></returns>
-        public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services)
+        public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, string configurationPath = "dapper.xml")
         {
-            services.AddRepository()
+            services.AddRepository(configurationPath)
                 .AddSingleton<IDbConnectionFactory, SqliteConnectionFactory>();
 
             return services;
@@ -25,10 +26,11 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="services"></param>
         /// <param name="setupAction"></param>
+        /// <param name="configurationPath"></param>
         /// <returns></returns>
-        public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, Action<SqliteConnectionOptions> setupAction)
+        public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, Action<SqliteConnectionOptions> setupAction, string configurationPath = "dapper.xml")
         {
-            services.AddSqliteDataAccess().Configure(setupAction);
+            services.AddSqliteDataAccess(configurationPath).Configure(setupAction);
 
             return services;
         }
