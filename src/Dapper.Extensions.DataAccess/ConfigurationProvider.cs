@@ -19,7 +19,10 @@ namespace Dapper.Extensions.DataAccess
             {
                 var type = Type.GetType(mapperDefinition.Type, true);
                 using var resource = type.Assembly.GetManifestResourceStream(mapperDefinition.Name);
-                // TODO resouce may be null.
+                if (resource == null)
+                {
+                    throw new ArgumentException($"Get manifest resource of type `{mapperDefinition.Type}` with name `{mapperDefinition.Name}`, please check if the specified resource has been embeded.");
+                }
                 var xmlMapper = new XmlSerializer(typeof(Mapper));
                 var mapper = (Mapper)xmlMapper.Deserialize(resource);
                 Mappers.Add(type, mapper);
