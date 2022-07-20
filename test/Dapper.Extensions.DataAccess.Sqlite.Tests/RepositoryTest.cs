@@ -48,4 +48,12 @@ public class RepositoryTest
         var artists = await artistRepo.SelectAllAsync();
         Assert.Equal(275, artists.Count());
     }
+
+    [Fact]
+    public async Task TestCustomerAsync()
+    {
+        var customers = Services.GetRequiredService<IRepository<Customer, int>>();
+
+        await Assert.ThrowsAsync<ArgumentException>(async () => await customers.SelectAllAsync());
+    }
 }

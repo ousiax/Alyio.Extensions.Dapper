@@ -2,6 +2,14 @@
 {
     internal sealed class MapperProvider<TEntity, TId> : IMapperProvider<TEntity, TId> where TEntity : class, new()
     {
+        private IDictionary<string, SelectDefinition> SelectDefinitions { get; }
+
+        private IDictionary<string, InsertDefinition> InsertDefinitions { get; }
+
+        private IDictionary<string, DeleteDefinition> DeleteDefinitions { get; }
+
+        private IDictionary<string, UpdateDefinition> UpdateDefinitions { get; }
+
         public MapperProvider(IConfigurationProvider configurationProvider)
         {
             if (configurationProvider.Mappers.TryGetValue(typeof(TEntity), out var mapper))
@@ -17,12 +25,24 @@
             }
         }
 
-        public IDictionary<string, SelectDefinition> SelectDefinitions { get; }
+        public bool TryFindSelectDefinition(string id, out SelectDefinition definition)
+        {
+            return SelectDefinitions.TryGetValue(id, out definition);
+        }
 
-        public IDictionary<string, InsertDefinition> InsertDefinitions { get; }
+        public bool TryFindInsertDefinition(string id, out InsertDefinition definition)
+        {
+            return InsertDefinitions.TryGetValue(id, out definition);
+        }
 
-        public IDictionary<string, DeleteDefinition> DeleteDefinitions { get; }
+        public bool TryFindDeleteDefinition(string id, out DeleteDefinition definition)
+        {
+            return DeleteDefinitions.TryGetValue(id, out definition);
+        }
 
-        public IDictionary<string, UpdateDefinition> UpdateDefinitions { get; }
+        public bool TryFindUpdateDefinition(string id, out UpdateDefinition definition)
+        {
+            return UpdateDefinitions.TryGetValue(id, out definition);
+        }
     }
 }

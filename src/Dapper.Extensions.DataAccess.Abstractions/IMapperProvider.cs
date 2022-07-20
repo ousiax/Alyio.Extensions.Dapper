@@ -8,21 +8,33 @@
         /// <summary>
         /// 
         /// </summary>
-        IDictionary<string, SelectDefinition> SelectDefinitions { get; }
+        /// <param name="id"></param>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        bool TryFindSelectDefinition(string id, out SelectDefinition definition);
 
         /// <summary>
         /// 
         /// </summary>
-        IDictionary<string, InsertDefinition> InsertDefinitions { get; }
+        /// <param name="id"></param>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        bool TryFindInsertDefinition(string id, out InsertDefinition definition);
 
         /// <summary>
         /// 
         /// </summary>
-        IDictionary<string, DeleteDefinition> DeleteDefinitions { get; }
+        /// <param name="id"></param>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        bool TryFindDeleteDefinition(string id, out DeleteDefinition definition);
 
         /// <summary>
         /// 
         /// </summary>
-        IDictionary<string, UpdateDefinition> UpdateDefinitions { get; }
+        /// <param name="id"></param>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        bool TryFindUpdateDefinition(string id, out UpdateDefinition definition);
     }
 }

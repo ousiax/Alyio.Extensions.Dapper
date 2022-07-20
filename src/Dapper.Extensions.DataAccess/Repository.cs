@@ -13,8 +13,11 @@
 
         public async Task<TEntity> SelectByIdAsync(TId id, CancellationToken cancellationToken = default)
         {
+            if (!_mapperProvider.TryFindSelectDefinition(nameof(SelectByIdAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(SelectByIdAsync)}' was not present in the mapper.");
+            }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var def = _mapperProvider.SelectDefinitions[nameof(SelectByIdAsync)];
             var queryParams = new DynamicParameters();
             queryParams.Add(def.IdName, id);
             var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: queryParams, cancellationToken: cancellationToken);
@@ -23,24 +26,33 @@
 
         public async Task<IEnumerable<TEntity>> SelectAllAsync(CancellationToken cancellationToken = default)
         {
+            if (!_mapperProvider.TryFindSelectDefinition(nameof(SelectAllAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(SelectAllAsync)}' was not present in the mapper.");
+            }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var def = _mapperProvider.SelectDefinitions[nameof(SelectAllAsync)];
             var cmdDef = new CommandDefinition(commandText: def.Sql, cancellationToken: cancellationToken);
             return await conn.QueryAsync<TEntity>(cmdDef).ConfigureAwait(false);
         }
 
         public async Task<int> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
+            if (!_mapperProvider.TryFindInsertDefinition(nameof(InsertAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(InsertAsync)}' was not present in the mapper.");
+            }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var def = _mapperProvider.InsertDefinitions[nameof(InsertAsync)];
             var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: entity, cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
         }
 
         public async Task<int> DeleteAsync(TId id, CancellationToken cancellationToken = default)
         {
+            if (!_mapperProvider.TryFindDeleteDefinition(nameof(DeleteAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(DeleteAsync)}' was not present in the mapper.");
+            }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var def = _mapperProvider.DeleteDefinitions[nameof(DeleteAsync)];
             var queryParams = new DynamicParameters();
             queryParams.Add(def.IdName, id);
             var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: queryParams, cancellationToken: cancellationToken);
@@ -50,8 +62,11 @@
 
         public async Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
+            if (!_mapperProvider.TryFindUpdateDefinition(nameof(UpdateAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(UpdateAsync)}' was not present in the mapper.");
+            }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var def = _mapperProvider.UpdateDefinitions[nameof(UpdateAsync)];
             var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: entity, cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
         }

@@ -3,5 +3,6 @@
     <mappers>
         <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Genre, Dapper.Extensions.DataAccess.Sqlite.Tests" name="Dapper.Extensions.DataAccess.Sqlite.Tests.Mappers.Genre.xml"></mapper>
         <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Artist, Dapper.Extensions.DataAccess.Sqlite.Tests" name="Dapper.Extensions.DataAccess.Sqlite.Tests.Mappers.Artist.xml"></mapper>
+        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.Customer, Dapper.Extensions.DataAccess.Sqlite.Tests" name="Dapper.Extensions.DataAccess.Sqlite.Tests.Mappers.Customer.xml"></mapper>
     </mappers>
 </configuration>
