@@ -23,7 +23,7 @@ namespace Dapper.Extensions.DataAccess
 
         public async Task<IDbConnection> OpenReadOnlyAsync()
         {
-            var conn = new SqliteConnection(_options.Value.Slave?[0]);
+            var conn = new SqliteConnection(_options.Value.Slaves?[0]);
             await conn.OpenAsync().ConfigureAwait(false);
             return conn;
         }
