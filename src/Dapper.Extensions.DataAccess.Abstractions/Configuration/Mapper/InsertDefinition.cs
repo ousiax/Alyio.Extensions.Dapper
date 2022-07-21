@@ -6,27 +6,7 @@ namespace Dapper.Extensions.DataAccess
     /// A mapped INSERT statement.
     /// </summary>
     [XmlRoot("insert")]
-    public sealed class InsertDefinition
+    public sealed class InsertDefinition : BaseDefinition
     {
-        /// <summary>
-        /// A unique identifier that can be used to reference this statement.
-        /// </summary>
-        [XmlAttribute("id")]
-        public string Id { get; set; } = null!;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [XmlText]
-        public string Sql { get; set; } = null!;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return $"Id: {Id}, Sql: {Sql}";
-        }
     }
 }

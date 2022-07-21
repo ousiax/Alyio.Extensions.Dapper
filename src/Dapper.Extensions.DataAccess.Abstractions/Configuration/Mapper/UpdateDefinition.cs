@@ -6,33 +6,12 @@ namespace Dapper.Extensions.DataAccess
     /// A mapped UPDATE statement. 
     /// </summary>
     [XmlRoot("update")]
-    public sealed class UpdateDefinition
+    public sealed class UpdateDefinition : BaseDefinition
     {
         /// <summary>
-        /// A unique identifier that can be used to reference this statement.
-        /// </summary>
-        [XmlAttribute("id")]
-        public string Id { get; set; } = null!;
-
-        /// <summary>
-        /// 
+        /// Gets or sets the primary key column name of the table.
         /// </summary>
         [XmlAttribute("idName")]
         public string? IdName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [XmlText]
-        public string Sql { get; set; } = null!;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return $"Id: {Id}, Sql: {Sql}";
-        }
     }
 }

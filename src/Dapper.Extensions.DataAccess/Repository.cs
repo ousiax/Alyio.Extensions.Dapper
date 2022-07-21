@@ -18,9 +18,14 @@
                 throw new ArgumentException($"The given id '{nameof(SelectByIdAsync)}' was not present in the mapper.");
             }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var queryParams = new DynamicParameters();
-            queryParams.Add(def.IdName, id);
-            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: queryParams, cancellationToken: cancellationToken);
+            var parameters = new DynamicParameters();
+            parameters.Add(def.IdName, id);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                parameters: parameters,
+                cancellationToken: cancellationToken);
             return await conn.QuerySingleAsync<TEntity>(cmdDef).ConfigureAwait(false);
         }
 
@@ -31,7 +36,11 @@
                 throw new ArgumentException($"The given id '{nameof(SelectAllAsync)}' was not present in the mapper.");
             }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var cmdDef = new CommandDefinition(commandText: def.Sql, cancellationToken: cancellationToken);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                cancellationToken: cancellationToken);
             return await conn.QueryAsync<TEntity>(cmdDef).ConfigureAwait(false);
         }
 
@@ -42,7 +51,12 @@
                 throw new ArgumentException($"The given id '{nameof(InsertAsync)}' was not present in the mapper.");
             }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: entity, cancellationToken: cancellationToken);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                parameters: entity,
+                cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
         }
 
@@ -53,9 +67,14 @@
                 throw new ArgumentException($"The given id '{nameof(DeleteAsync)}' was not present in the mapper.");
             }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var queryParams = new DynamicParameters();
-            queryParams.Add(def.IdName, id);
-            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: queryParams, cancellationToken: cancellationToken);
+            var parameters = new DynamicParameters();
+            parameters.Add(def.IdName, id);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                parameters: parameters,
+                cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
 
         }
@@ -67,7 +86,12 @@
                 throw new ArgumentException($"The given id '{nameof(UpdateAsync)}' was not present in the mapper.");
             }
             using var conn = await _connectionFactory.OpenAsync().ConfigureAwait(false);
-            var cmdDef = new CommandDefinition(commandText: def.Sql, parameters: entity, cancellationToken: cancellationToken);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                parameters: entity,
+                cancellationToken: cancellationToken);
             return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
         }
     }
