@@ -1,3 +1,7 @@
+# Dapper.Extensions.DataAccess
+
+![Build Status](https://github.com/qqbuby/Dapper.Extensions.DataAccess/actions/workflows/ci.yml/badge.svg?branch=main)
+
 ```cs
 using ChinookApp.Models;
 using ChinookApp.Repositories;
