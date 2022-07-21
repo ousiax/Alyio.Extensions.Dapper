@@ -13,6 +13,7 @@ public class RepositoryTest
         {
             services.AddSqliteDataAccess();
             services.Configure<SqliteConnectionOptions>(context.Configuration.GetSection(nameof(SqliteConnectionOptions)));
+            services.AddScoped<IGenreRepository, GenreRepository>();
         });
         var app = host.Build();
         Services = app.Services;
@@ -55,5 +56,13 @@ public class RepositoryTest
         var customers = Services.GetRequiredService<IRepository<Customer, int>>();
 
         await Assert.ThrowsAsync<ArgumentException>(async () => await customers.SelectAllAsync());
+    }
+
+    [Fact]
+    public async Task TestGenreRepositoryAsync()
+    {
+        var genres = Services.GetRequiredService<IGenreRepository>();
+        var rock = await genres.SelectByNameAsync("Comedy");
+        Assert.Equal("Comedy", rock.Name);
     }
 }
