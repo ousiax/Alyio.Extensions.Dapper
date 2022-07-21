@@ -44,7 +44,7 @@
                 commandType: def.CommandType,
                 parameters: parameters,
                 cancellationToken: cancellationToken);
-            return await conn.QuerySingleAsync<TEntity>(cmdDef).ConfigureAwait(false);
+            return await conn.QuerySingleOrDefaultAsync<TEntity>(cmdDef).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
