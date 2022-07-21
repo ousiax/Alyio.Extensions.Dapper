@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <mappers>
+        <mapper type="ChinookApp.Models.Genre, ChinookApp"></mapper>
+        <mapper type="ChinookApp.Models.Artist, ChinookApp"></mapper>
+        <mapper type="ChinookApp.Models.Customer, ChinookApp"></mapper>
+    </mappers>
+</configuration>
