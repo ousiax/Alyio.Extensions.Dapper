@@ -24,7 +24,7 @@ public class GenreRepository : Repository<Genre, int>, IGenreRepository
     {
         if (!Mapper.TryFindSelect(nameof(SelectByNameAsync), out var def))
         {
-            throw new ArgumentException($"The given id '{nameof(SelectByIdAsync)}' was not present in the mapper.");
+            throw new ArgumentException($"The given id '{nameof(SelectByNameAsync)}' was not present in the mapper.");
         }
         using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
         var parameters = new DynamicParameters();
