@@ -35,7 +35,7 @@
             {
                 throw new ArgumentException($"The given id '{nameof(SelectByIdAsync)}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            using var conn = await ConnectionFactory.OpenAsync(def.OpenMode).ConfigureAwait(false);
             var parameters = new DynamicParameters();
             parameters.Add(def.IdName, id);
             var cmdDef = new CommandDefinition(
@@ -54,7 +54,7 @@
             {
                 throw new ArgumentException($"The given id '{nameof(SelectAllAsync)}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            using var conn = await ConnectionFactory.OpenAsync(def.OpenMode).ConfigureAwait(false);
             var cmdDef = new CommandDefinition(
                 commandText: def.CommandText,
                 commandTimeout: def.CommandTimeout,
@@ -70,7 +70,7 @@
             {
                 throw new ArgumentException($"The given id '{nameof(InsertAsync)}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
             var cmdDef = new CommandDefinition(
                 commandText: def.CommandText,
                 commandTimeout: def.CommandTimeout,
@@ -87,7 +87,7 @@
             {
                 throw new ArgumentException($"The given id '{nameof(DeleteAsync)}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
             var parameters = new DynamicParameters();
             parameters.Add(def.IdName, id);
             var cmdDef = new CommandDefinition(
@@ -107,7 +107,7 @@
             {
                 throw new ArgumentException($"The given id '{nameof(UpdateAsync)}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
             var cmdDef = new CommandDefinition(
                 commandText: def.CommandText,
                 commandTimeout: def.CommandTimeout,

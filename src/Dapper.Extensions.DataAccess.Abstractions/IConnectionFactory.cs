@@ -10,13 +10,8 @@ namespace Dapper.Extensions.DataAccess
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="mode"></param>
         /// <returns></returns>
-        Task<IDbConnection> OpenAsync();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        Task<IDbConnection> OpenReadOnlyAsync();
+        Task<IDbConnection> OpenAsync(OpenMode mode = OpenMode.ReadWrite);
     }
 }

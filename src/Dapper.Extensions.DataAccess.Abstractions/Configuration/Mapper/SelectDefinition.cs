@@ -13,5 +13,11 @@ namespace Dapper.Extensions.DataAccess
         /// </summary>
         [XmlAttribute("idName")]
         public string? IdName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connection mode.
+        /// </summary>
+        [XmlAttribute("openMode")]
+        public OpenMode OpenMode { get; set; }
     }
 }

@@ -15,18 +15,24 @@ namespace Dapper.Extensions.DataAccess
             _options = options;
         }
 
-        public async Task<IDbConnection> OpenAsync()
+        public async Task<IDbConnection> OpenAsync(OpenMode mode = OpenMode.ReadWrite)
         {
-            var conn = new MySqlConnection(_options.Value.Master);
-            await conn.OpenAsync().ConfigureAwait(false);
-            return conn;
-        }
+            MySqlConnection connection;
+            if (mode == OpenMode.ReadWrite)
+            {
+                connection = new MySqlConnection(_options.Value.Master);
+            }
+            else if (mode == OpenMode.ReadOnly)
+            {
+                connection = new MySqlConnection(_options.Value.Slave?[0]);
+            }
+            else
+            {
+                throw new NotImplementedException($"Unkonw OpenMode: {mode}.");
+            }
 
-        public async Task<IDbConnection> OpenReadOnlyAsync()
-        {
-            var conn = new MySqlConnection(_options.Value.Slave?[0]);
-            await conn.OpenAsync().ConfigureAwait(false);
-            return conn;
+            await connection.OpenAsync().ConfigureAwait(false);
+            return connection;
         }
     }
 }

@@ -18,7 +18,7 @@ public class SqliteConnectionFactoryTest
 
         await Assert.ThrowsAsync<Microsoft.Data.Sqlite.SqliteException>(async () =>
         {
-            using var connReadOnly = await connectionFactory.OpenReadOnlyAsync();
+            using var connReadOnly = await connectionFactory.OpenAsync(OpenMode.ReadOnly);
             await connReadOnly.ExecuteAsync("DROP TABLE IF EXISTS SqliteConnectionFactoryTest");
         });
     }
