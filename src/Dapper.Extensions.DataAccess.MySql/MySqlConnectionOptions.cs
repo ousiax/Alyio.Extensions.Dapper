@@ -13,6 +13,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public IList<string>? Slave { get; set; }
+        public IList<string>? Slaves { get; set; }
     }
 }

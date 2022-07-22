@@ -24,7 +24,7 @@ namespace Dapper.Extensions.DataAccess
             }
             else if (mode == OpenMode.ReadOnly)
             {
-                connection = new MySqlConnection(_options.Value.Slave?[0]);
+                connection = new MySqlConnection(_options.Value.Slaves?[0]);
             }
             else
             {
