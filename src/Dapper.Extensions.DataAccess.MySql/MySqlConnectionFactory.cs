@@ -24,7 +24,8 @@ namespace Dapper.Extensions.DataAccess
             }
             else if (mode == OpenMode.ReadOnly)
             {
-                connection = new MySqlConnection(_options.Value.Slaves?[0]);
+                var index = new Random().Next(_options.Value.Slaves.Length);
+                connection = new MySqlConnection(_options.Value.Slaves?[index]);
             }
             else
             {
