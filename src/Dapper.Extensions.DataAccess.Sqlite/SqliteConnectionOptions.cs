@@ -13,6 +13,6 @@
         /// <summary>
         /// 
         /// </summary>
-        public IList<string>? Slaves { get; set; }
+        public string[] Slaves { get; set; } = Array.Empty<string>();
     }
 }
