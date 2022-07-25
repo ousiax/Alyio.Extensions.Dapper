@@ -14,6 +14,10 @@ using MySqlConnector.Logging;
 using Microsoft.Extensions.Logging;
 
 var host = Host.CreateDefaultBuilder();
+
+// Configure MySqlConnectionOption from user secrets.
+host.ConfigureAppConfiguration(builder => builder.AddUserSecrets(typeof(Program).Assembly, false));
+
 host.ConfigureServices((context, services) =>
 {
     services.AddMySqlDataAccess();
@@ -47,6 +51,8 @@ Console.WriteLine(genre3.Name);
 
 ```console
 $ dotnet run
+info: MySqlConnector.ConnectionPool[0]
+      Pool1 creating new connection pool for ConnectionString: Server=local.io;Port=53306;User ID=root;Database=Chinook;Pooling=True;Minimum Pool Size=64;Maximum Pool Size=512
 Rock
 Jazz
 Metal
@@ -70,4 +76,6 @@ Pop
 Soundtrack
 --------------
 Rock
+info: MySqlConnector.ConnectionPool[0]
+      Pool1 clearing connection pool
 ```

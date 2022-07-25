@@ -5,15 +5,25 @@ using Alyio.Extensions.Dapper;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySqlConnector.Logging;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 var host = Host.CreateDefaultBuilder();
+
+// Configure MySqlConnectionOption from user secrets.
+host.ConfigureAppConfiguration(builder => builder.AddUserSecrets(typeof(Program).Assembly, false));
+
 host.ConfigureServices((context, services) =>
 {
-    services.AddSqliteDataAccess();
-    services.Configure<SqliteConnectionOptions>(context.Configuration.GetSection(nameof(SqliteConnectionOptions)));
+    services.AddMySqlDataAccess();
+    services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
     services.AddScoped<IGenreRepository, GenreRepository>();
 });
 var app = host.Build();
+
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+MySqlConnectorLogManager.Provider = new MicrosoftExtensionsLoggingLoggerProvider(loggerFactory);
 
 var genericRepository = app.Services.GetRequiredService<IRepository<Genre, int>>();
 var genres = await genericRepository.SelectAllAsync();
