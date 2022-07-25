@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/qqbuby/Alyio.Extensions.Dapper/actions/workflows/ci.yml/badge.svg?branch=main)
 
-_Alyio.Extensions.Dapper_ provides extensions for [Dapper](https://github.com/DapperLib/Dapper) that implements a [repository pattern] (https://martinfowler.com/eaaCatalog/repository.html).
+_Alyio.Extensions.Dapper_ provides extensions for [Dapper](https://github.com/DapperLib/Dapper) that implements a [repository pattern](https://martinfowler.com/eaaCatalog/repository.html).
 
 ## Usage:
 
