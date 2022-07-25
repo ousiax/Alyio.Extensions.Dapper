@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <mappers>
+    <mapper type="Alyio.Extensions.Dapper.Sqlite.Tests.Models.Genre, Alyio.Extensions.Dapper.Sqlite.Tests"></mapper>
+    <mapper type="Alyio.Extensions.Dapper.Sqlite.Tests.Models.Artist, Alyio.Extensions.Dapper.Sqlite.Tests"></mapper>
+    <mapper type="Alyio.Extensions.Dapper.Sqlite.Tests.Models.Customer, Alyio.Extensions.Dapper.Sqlite.Tests"></mapper>
+  </mappers>
+</configuration>
