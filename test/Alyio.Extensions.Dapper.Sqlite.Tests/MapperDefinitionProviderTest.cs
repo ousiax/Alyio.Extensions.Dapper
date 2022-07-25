@@ -15,7 +15,9 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             });
             var app = host.Build();
 
-            Assert.Throws<ArgumentException>(() => app.Services.GetRequiredService<IMapperDefinitionProvider<Album, int>>());
+            var exception = Assert.Throws<ArgumentException>(() => app.Services.GetRequiredService<IMapperDefinitionProvider<Album, int>>());
+            Assert.Contains($"The mapper of type `{typeof(Album)}` was not defined", exception.Message);
+
             return Task.CompletedTask;
         }
     }
