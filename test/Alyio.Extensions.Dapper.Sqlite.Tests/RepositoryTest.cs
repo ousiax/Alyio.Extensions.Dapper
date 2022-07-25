@@ -52,11 +52,12 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
         }
 
         [Fact]
-        public async Task TestCustomerAsync()
+        public async Task TestCustomerThrowArgumentExceptionAsync()
         {
             var customers = Services.GetRequiredService<IRepository<Customer, int>>();
 
-            await Assert.ThrowsAsync<ArgumentException>(async () => await customers.SelectAllAsync());
+            var exception = await Assert.ThrowsAsync<ArgumentException>(async () => await customers.SelectAllAsync());
+            Assert.Equal($"The given id '{nameof(customers.SelectAllAsync)}' was not present in the mapper.", exception.Message);
         }
 
         [Fact]
