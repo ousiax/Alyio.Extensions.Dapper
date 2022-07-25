@@ -18,11 +18,13 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             using var conn = await connectionFactory.OpenAsync();
             await conn.ExecuteAsync("CREATE TABLE IF NOT EXISTS SqliteConnectionFactoryTest(Id integer)");
 
-            await Assert.ThrowsAsync<Microsoft.Data.Sqlite.SqliteException>(async () =>
+            var exception = await Assert.ThrowsAsync<Microsoft.Data.Sqlite.SqliteException>(async () =>
             {
                 using var connReadOnly = await connectionFactory.OpenAsync(OpenMode.ReadOnly);
                 await connReadOnly.ExecuteAsync("DROP TABLE IF EXISTS SqliteConnectionFactoryTest");
             });
+
+            Assert.Contains("attempt to write a readonly database", exception.Message);
         }
     }
 }
