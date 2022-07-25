@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// A mapped INSERT statement.
     /// </summary>
     [XmlRoot("insert")]
-    public sealed class InsertDefinition : BaseDefinition
+    public sealed class InsertDefinition : SqlDefinition
     {
     }
 }

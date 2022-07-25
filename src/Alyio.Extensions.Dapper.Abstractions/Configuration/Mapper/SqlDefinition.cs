@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// <summary>
     /// Represents an SQL statement that is executed while connected to a data source, and is implemented by .NET data providers that access relational databases.
     /// </summary>
-    public class BaseDefinition
+    public abstract class SqlDefinition
     {
         /// <summary>
         /// Gets or sets a unique identifier that can be used to reference this statement.

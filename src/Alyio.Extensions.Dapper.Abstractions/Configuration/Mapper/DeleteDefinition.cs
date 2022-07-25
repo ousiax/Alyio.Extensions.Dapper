@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// A mapped DELETE statement. 
     /// </summary>
     [XmlRoot("delete")]
-    public sealed class DeleteDefinition : BaseDefinition
+    public sealed class DeleteDefinition : SqlDefinition
     {
         /// <summary>
         /// Gets or sets the primary key column name of the table.

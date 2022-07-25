@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// A mapped UPDATE statement. 
     /// </summary>
     [XmlRoot("update")]
-    public sealed class UpdateDefinition : BaseDefinition
+    public sealed class UpdateDefinition : SqlDefinition
     {
         /// <summary>
         /// Gets or sets the primary key column name of the table.

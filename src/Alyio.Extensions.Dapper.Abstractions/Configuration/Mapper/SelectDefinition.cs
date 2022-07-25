@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// A mapped SELECT statement. 
     /// </summary>
     [XmlRoot("select")]
-    public sealed class SelectDefinition : BaseDefinition
+    public sealed class SelectDefinition : SqlDefinition
     {
         /// <summary>
         /// Gets or sets the primary key column name of the table.
