@@ -6,6 +6,10 @@ _Alyio.Extensions.Dapper_ provides extensions for https://github.com/DapperLib/D
 
 == Usage:
 
+```sh
+dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
+```
+
 . Define the `dapper.xml` and sql statement mapper with `mapper.xml`.
 +
 Here is a sample of `dapper.xml`:
