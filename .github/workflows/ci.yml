@@ -1,4 +1,4 @@
-name: Dapper.Extensions.DataAccess
+name: Alyio.Extensions.Dapper
 on:
   push:
     branches:

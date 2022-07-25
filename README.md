@@ -1,24 +1,29 @@
-# Dapper.Extensions.DataAccess
+# Alyio.Extensions.Dapper
 
-![Build Status](https://github.com/qqbuby/Dapper.Extensions.DataAccess/actions/workflows/ci.yml/badge.svg?branch=main)
+![Build Status](https://github.com/qqbuby/Alyio.Extensions.Dapper/actions/workflows/ci.yml/badge.svg?branch=main)
 
 ```cs
 using ChinookApp.Models;
 using ChinookApp.Repositories;
 
-using Dapper.Extensions.DataAccess;
+using Alyio.Extensions.Dapper;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySqlConnector.Logging;
+using Microsoft.Extensions.Logging;
 
 var host = Host.CreateDefaultBuilder();
 host.ConfigureServices((context, services) =>
 {
-    services.AddSqliteDataAccess();
-    services.Configure<SqliteConnectionOptions>(context.Configuration.GetSection(nameof(SqliteConnectionOptions)));
+    services.AddMySqlDataAccess();
+    services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
     services.AddScoped<IGenreRepository, GenreRepository>();
 });
 var app = host.Build();
+
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+MySqlConnectorLogManager.Provider = new MicrosoftExtensionsLoggingLoggerProvider(loggerFactory);
 
 var genericRepository = app.Services.GetRequiredService<IRepository<Genre, int>>();
 var genres = await genericRepository.SelectAllAsync();
