@@ -2,7 +2,7 @@
 
 image::https://github.com/qqbuby/Alyio.Extensions.Dapper/actions/workflows/ci.yml/badge.svg?branch=main[Build Status]
 
-_Alyio.Extensions.Dapper_ provides extensions for https://github.com/DapperLib/Dapper[Dapper] thats implements a https://martinfowler.com/eaaCatalog/repository.html[repository pattern] of DDD.
+_Alyio.Extensions.Dapper_ provides extensions for https://github.com/DapperLib/Dapper[Dapper] that implements a https://martinfowler.com/eaaCatalog/repository.html[repository pattern] of DDD.
 
 == Usage:
 
@@ -42,79 +42,47 @@ The `SelectPageAsync` is a paginator SQL statements mapper and the follow custom
 +
 [,cs]
 ----
-using Alyio.Extensions.Dapper;
-
-using ChinookApp.Models;
-
-using Dapper;
-
-namespace ChinookApp.Repositories
+public class GenreRepository : Repository<Genre, int>, IGenreRepository
 {
-    // CREATE TABLE [Genre]
-    // (
-    //     [GenreId] INTEGER  NOT NULL,
-    //     [Name] NVARCHAR(120),
-    //     CONSTRAINT [PK_Genre] PRIMARY KEY  ([GenreId])
-    // );
-    ///
-    public class GenreRepository : Repository<Genre, int>, IGenreRepository
+    public GenreRepository(
+        IConnectionFactory connectionFactory,
+        IMapperDefinitionProvider<Genre, int> mapperProvider) : base(connectionFactory, mapperProvider)
     {
-        public GenreRepository(
-            IConnectionFactory connectionFactory,
-            IMapperDefinitionProvider<Genre, int> mapperProvider) : base(connectionFactory, mapperProvider)
+    }
+
+    // ...
+
+    public async Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken ancellationToken = default)
+    {
+        if (pageNumber < 0)
         {
+            throw new ArgumentException($"{nameof(pageNumber)} must be greater than or equal to zero.");
         }
 
-        public async Task<Genre> SelectByNameAsync(string name, CancellationToken cancellationToken = default)
+        if (pageSize <= 0)
         {
-            if (!Mapper.TryFindSelect(nameof(SelectByNameAsync), out var def))
-            {
-                throw new ArgumentException($"The given id '{nameof(SelectByNameAsync)}' was not present in the mapper.");
-            }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
-            var parameters = new DynamicParameters();
-            parameters.Add(nameof(Genre.Name), name);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: parameters,
-                cancellationToken: cancellationToken);
-            return await conn.QuerySingleOrDefaultAsync<Genre>(cmdDef).ConfigureAwait(false);
+            throw new ArgumentException($"{nameof(pageSize)} must be greater than zero.");
         }
 
-        public async Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        if (!Mapper.TryFindSelect(nameof(SelectPageAsync), out var def))
         {
-            if (pageNumber < 0)
-            {
-                throw new ArgumentException($"{nameof(pageNumber)} must be greater than or equal to zero.");
-            }
-
-            if (pageSize <= 0)
-            {
-                throw new ArgumentException($"{nameof(pageSize)} must be greater than zero.");
-            }
-
-            if (!Mapper.TryFindSelect(nameof(SelectPageAsync), out var def))
-            {
-                throw new ArgumentException($"The given id '{nameof(SelectPageAsync)}' was not present in the mapper.");
-            }
-
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
-            var parameters = new DynamicParameters();
-            parameters.Add("LIMIT", pageSize);
-            parameters.Add("OFFSET", pageSize * pageNumber);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: parameters,
-                cancellationToken: cancellationToken);
-            using var multi = await conn.QueryMultipleAsync(cmdDef).ConfigureAwait(false);
-            var count = await multi.ReadSingleAsync<int>();
-            var results = await multi.ReadAsync<Genre>();
-            return (count / pageSize, results);
+            throw new ArgumentException($"The given id '{nameof(SelectPageAsync)}' was not present in the mapper.");
         }
+
+        using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+        var parameters = new DynamicParameters();
+        parameters.Add("LIMIT", pageSize);
+        parameters.Add("OFFSET", pageSize * pageNumber);
+        var cmdDef = new CommandDefinition(
+            commandText: def.CommandText,
+            commandTimeout: def.CommandTimeout,
+            commandType: def.CommandType,
+            parameters: parameters,
+            cancellationToken: cancellationToken);
+        using var multi = await conn.QueryMultipleAsync(cmdDef).ConfigureAwait(false);
+        var count = await multi.ReadSingleAsync<int>();
+        var results = await multi.ReadAsync<Genre>();
+        return (count / pageSize, results);
     }
 }
 ----
@@ -123,9 +91,9 @@ namespace ChinookApp.Repositories
 +
 [,cs]
 ----
-    services.AddMySqlDataAccess();
-    services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
-    services.AddScoped<IGenreRepository, GenreRepository>();
+services.AddMySqlDataAccess();
+services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
+services.AddScoped<IGenreRepository, GenreRepository>();
 ----
 
 . Get the specified repository service:
@@ -140,7 +108,7 @@ foreach (var artist in genres.Take(10))
 }
 ----
 
-== There is alos an example at exmaple/ChinookApp:
+== There is also an example at exmaple/ChinookApp:
 
 [,cs]
 ----
