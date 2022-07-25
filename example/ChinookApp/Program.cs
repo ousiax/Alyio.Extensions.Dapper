@@ -43,3 +43,11 @@ foreach (var artist in genres.Take(10))
 Console.WriteLine("--------------");
 var genre3 = await genreRepository.SelectByNameAsync(genres2.First()!.Name!);
 Console.WriteLine(genre3.Name);
+
+Console.WriteLine("--------------");
+var (pageCount, resultSet) = await genreRepository.SelectPageAsync(1, 5);
+Console.WriteLine(pageCount);
+foreach (var g in resultSet)
+{
+    Console.WriteLine(g.Name);
+}

@@ -38,5 +38,38 @@ namespace ChinookApp.Repositories
                 cancellationToken: cancellationToken);
             return await conn.QuerySingleOrDefaultAsync<Genre>(cmdDef).ConfigureAwait(false);
         }
+
+        public async Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        {
+            if (pageNumber < 0)
+            {
+                throw new ArgumentException($"{nameof(pageNumber)} must be greater than or equal to zero.");
+            }
+
+            if (pageSize <= 0)
+            {
+                throw new ArgumentException($"{nameof(pageSize)} must be greater than zero.");
+            }
+
+            if (!Mapper.TryFindSelect(nameof(SelectPageAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(SelectPageAsync)}' was not present in the mapper.");
+            }
+
+            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            var parameters = new DynamicParameters();
+            parameters.Add("LIMIT", pageSize);
+            parameters.Add("OFFSET", pageSize * pageNumber);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                parameters: parameters,
+                cancellationToken: cancellationToken);
+            using var multi = await conn.QueryMultipleAsync(cmdDef).ConfigureAwait(false);
+            var count = await multi.ReadSingleAsync<int>();
+            var results = await multi.ReadAsync<Genre>();
+            return (count / pageSize, results);
+        }
     }
 }
