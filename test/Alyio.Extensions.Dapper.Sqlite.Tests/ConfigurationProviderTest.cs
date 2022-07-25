@@ -5,7 +5,7 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
         [Fact]
         public Task TestThrowArgumentExceptionAsync()
         {
-            Assert.Throws<ArgumentException>(() =>
+            var exception = Assert.Throws<ArgumentException>(() =>
             {
                 var host = Host.CreateDefaultBuilder();
                 host.ConfigureServices((context, services) =>
@@ -15,6 +15,9 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
                 });
                 host.Build();
             });
+
+            Assert.Contains("Couldn't get manifest resource of type", exception.Message);
+
             return Task.CompletedTask;
         }
     }
