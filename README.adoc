@@ -29,18 +29,18 @@ And here is the embeded resource named `Genre.xml` for MySQL (e.g. _mapper.xml_ 
   <select id="SelectByIdAsync" idName="GenreId" commandType="Text">SELECT GenreId, Name FROM Genre WHERE GenreId = @GenreId</select>
   <select id="SelectByNameAsync">SELECT GenreId, Name FROM Genre WHERE Name = @Name</select>
   <select id="SelectAllAsync">SELECT GenreId, Name FROM Genre</select>
-  <select id="SelectPageAsync">SELECT COUNT(*) FROM Genre;SELECT GenreId, Name FROM Genre LIMIT @LIMIT OFFSET @OFFSET;</select> <1>
+  <select id="SelectPageAsync">SELECT COUNT(*) FROM Genre;SELECT GenreId, Name FROM Genre LIMIT @LIMIT OFFSET @OFFSET;</select>
   <insert id="InsertAsync">INSERT INTO Genre(GenreId, Name) VALUES (@GenreId, @Name)</insert>
   <delete id="DeleteAsync" idName="GenreId">DELETE FROM Genre WHERE GenreId = @GenreId</delete>
   <update id="UpdateAsync" idName="GenreId">UPDATE Genre SET NAME = @Name WHERE GenreId = @GenreId</update>
 </mapper>
 ----
 +
-<1> It's a paginator SQL statements mapper and the follow highlight sectionn of custom repository `GenreRepository` implements the paging query.
+The `SelectPageAsync` is a paginator SQL statements mapper and the follow custom repository `GenreRepository.SelectPageAsync` implements the paging query.
 
 . (Optional), extend the generic repository `Alyio.Extensions.Dapper.Repository<TEntity, TId>` to provide custom methods, for example:
 +
-[,cs,highlight="42-74"]
+[,cs]
 ----
 using Alyio.Extensions.Dapper;
 
