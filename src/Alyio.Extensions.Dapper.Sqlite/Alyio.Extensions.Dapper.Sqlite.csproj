@@ -10,6 +10,13 @@
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <Version>1.0.0</Version>
+    <Authors>XU</Authors>
+    <Copyright>Copyright (c) 2022 XU</Copyright>
+    <PackageProjectUrl>https://github.com/qqbuby/Alyio.Extensions.Dapper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/qqbuby/Alyio.Extensions.Dapper</RepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
