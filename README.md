@@ -17,9 +17,11 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>
-        <mappers>
-            <mapper type="ChinookApp.Models.Genre,   ChinookApp"></mapper>
-        </mappers>
+      <mappers>
+        <mapper type="ChinookApp.Models.Genre, ChinookApp"></mapper>
+        <mapper type="ChinookApp.Models.Artist, ChinookApp"></mapper>
+        <mapper type="ChinookApp.Models.Customer, ChinookApp"></mapper>
+      </mappers>
     </configuration>
     ```
 
@@ -28,13 +30,13 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
     <mapper>
-      <select id="SelectByIdAsync" idName="GenreId"   ommandType="Text">SELECT GenreId, Name FROM Genre WHERE   enreId = @GenreId</select>
-      <select id="SelectByNameAsync">SELECT GenreId, Name FROM   enre WHERE Name = @Name</select>
-      <select id="SelectAllAsync">SELECT GenreId, Name FROM   enre</select>
-      <select id="SelectPageAsync">SELECT COUNT(*) FROM Genre;  ELECT GenreId, Name FROM Genre LIMIT @LIMIT OFFSET OFFSET;  </select>
-      <insert id="InsertAsync">INSERT INTO Genre(GenreId, Name)   ALUES (@GenreId, @Name)</insert>
-      <delete id="DeleteAsync" idName="GenreId">DELETE FROM   enre WHERE GenreId = @GenreId</delete>
-      <update id="UpdateAsync" idName="GenreId">UPDATE Genre ET   NAME = @Name WHERE GenreId = @GenreId</update>
+      <select id="SelectByIdAsync" idName="GenreId" commandType="Text">SELECT GenreId, Name FROM Genre WHERE GenreId = @GenreId</select>
+      <select id="SelectByNameAsync">SELECT GenreId, Name FROM Genre WHERE Name = @Name</select>
+      <select id="SelectAllAsync">SELECT GenreId, Name FROM Genre</select>
+      <select id="SelectPageAsync">SELECT COUNT(*) FROM Genre;SELECT GenreId, Name FROM Genre LIMIT @LIMIT OFFSET @OFFSET;</select>
+      <insert id="InsertAsync">INSERT INTO Genre(GenreId, Name) VALUES (@GenreId, @Name)</insert>
+      <delete id="DeleteAsync" idName="GenreId">DELETE FROM Genre WHERE GenreId = @GenreId</delete>
+      <update id="UpdateAsync" idName="GenreId">UPDATE Genre SET NAME = @Name WHERE GenreId = @GenreId</update>
     </mapper>
     ```
     
@@ -43,34 +45,50 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
 2. (Optional), extend the generic repository `Repository<,>` to provide custom methods, for example:
 
     ```cs
-    public class GenreRepository : Repository<Genre, int>,     IGenreRepository
+    public class GenreRepository : Repository<Genre, int>, IGenreRepository
     {
         public GenreRepository(
             IConnectionFactory connectionFactory,
-            IMapperDefinitionProvider<Genre, int> mapperProvider)     : base(connectionFactory, mapperProvider)
+            IMapperDefinitionProvider<Genre, int> mapperProvider) : base(connectionFactory, mapperProvider)
         {
         }
-    
-        // ...
-    
-        public async Task<(int pageCount, IEnumerable<Genre>     resultSet)> SelectPageAsync(int pageNumber, int pageSize,     CancellationToken ancellationToken = default)
+
+        public async Task<Genre> SelectByNameAsync(string name, CancellationToken cancellationToken = default)
+        {
+            if (!Mapper.TryFindSelect(nameof(SelectByNameAsync), out var def))
+            {
+                throw new ArgumentException($"The given id '{nameof(SelectByNameAsync)}' was not present in the mapper.");
+            }
+            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
+            var parameters = new DynamicParameters();
+            parameters.Add(nameof(Genre.Name), name);
+            var cmdDef = new CommandDefinition(
+                commandText: def.CommandText,
+                commandTimeout: def.CommandTimeout,
+                commandType: def.CommandType,
+                parameters: parameters,
+                cancellationToken: cancellationToken);
+            return await conn.QuerySingleOrDefaultAsync<Genre>(cmdDef).ConfigureAwait(false);
+        }
+
+        public async Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
             if (pageNumber < 0)
             {
-                throw new ArgumentException($"{nameof    (pageNumber)} must be greater than or equal to     zero.");
+                throw new ArgumentException($"{nameof(pageNumber)} must be greater than or equal to zero.");
             }
-    
+
             if (pageSize <= 0)
             {
-                throw new ArgumentException($"{nameof(pageSize)}     must be greater than zero.");
+                throw new ArgumentException($"{nameof(pageSize)} must be greater than zero.");
             }
-    
-            if (!Mapper.TryFindSelect(nameof(SelectPageAsync),     out var def))
+
+            if (!Mapper.TryFindSelect(nameof(SelectPageAsync), out var def))
             {
-                throw new ArgumentException($"The given id '    {nameof(SelectPageAsync)}' was not present in the     mapper.");
+                throw new ArgumentException($"The given id '{nameof(SelectPageAsync)}' was not present in the mapper.");
             }
-    
-            using var conn = await ConnectionFactory.OpenAsync().    ConfigureAwait(false);
+
+            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
             var parameters = new DynamicParameters();
             parameters.Add("LIMIT", pageSize);
             parameters.Add("OFFSET", pageSize * pageNumber);
@@ -80,7 +98,7 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
                 commandType: def.CommandType,
                 parameters: parameters,
                 cancellationToken: cancellationToken);
-            using var multi = await conn.QueryMultipleAsync    (cmdDef).ConfigureAwait(false);
+            using var multi = await conn.QueryMultipleAsync(cmdDef).ConfigureAwait(false);
             var count = await multi.ReadSingleAsync<int>();
             var results = await multi.ReadAsync<Genre>();
             return (count / pageSize, results);
@@ -92,14 +110,14 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
 
     ```cs
     services.AddMySqlDataAccess();
-    services.Configure<MySqlConnectionOptions>(context.    Configuration.GetSection(nameof(MySqlConnectionOptions)));
+    services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
     services.AddScoped<IGenreRepository, GenreRepository>();
     ```
 
 4. Get and invoke the specified repository service:
 
     ```cs
-    var genreRepository = app.Services.    GetRequiredService<IGenreRepository>();
+    var genreRepository = app.Services.GetRequiredService<IGenreRepository>();
     var genres2 = await genreRepository.SelectAllAsync();
     foreach (var artist in genres.Take(10))
     {
