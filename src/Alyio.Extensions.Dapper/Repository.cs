@@ -3,27 +3,27 @@
 namespace Alyio.Extensions.Dapper
 {
     /// <summary>
-    /// 
+    /// Represents a generic repository implementation.
     /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TId"></typeparam>
+    /// <typeparam name="TEntity">The type of the entity mapped to relation database.</typeparam>
+    /// <typeparam name="TId">The ID (i.e. primary key) type of the entitty.</typeparam>
     public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, new()
     {
         /// <summary>
-        /// 
+        /// Gets a <see cref="IConnectionFactory"/>.
         /// </summary>
         protected IConnectionFactory ConnectionFactory { get; }
 
         /// <summary>
-        /// 
+        /// Gets a <see cref="IMapperDefinitionProvider{TEntity, TId}"/>.
         /// </summary>
         protected IMapperDefinitionProvider<TEntity, TId> Mapper { get; }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of <see cref="Repository{TEntity, TId}"/>.
         /// </summary>
-        /// <param name="connectionFactory"></param>
-        /// <param name="mapperProvider"></param>
+        /// <param name="connectionFactory">A <see cref="IConnectionFactory"/>.</param>
+        /// <param name="mapperProvider">A <see cref="IMapperDefinitionProvider{TEntity, TId}"/>.</param>
         public Repository(IConnectionFactory connectionFactory, IMapperDefinitionProvider<TEntity, TId> mapperProvider)
         {
             ConnectionFactory = connectionFactory;
