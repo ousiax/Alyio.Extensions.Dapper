@@ -3,6 +3,7 @@
     /// <summary>
     /// Provides programmatic configuration for the MySQL connection strings.
     /// </summary>
+    /// <remarks><seealso href="https://mysqlconnector.net/connection-options/"/>.</remarks>
     public class MySqlConnectionOptions
     {
         /// <summary>
