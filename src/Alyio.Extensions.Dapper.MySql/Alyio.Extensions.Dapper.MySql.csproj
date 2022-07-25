@@ -17,6 +17,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Description>A simple implementation of Repository Pattern with Dapper for MySQL.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
