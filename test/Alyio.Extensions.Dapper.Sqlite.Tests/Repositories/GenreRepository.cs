@@ -1,10 +1,8 @@
-using Alyio.Extensions.Dapper;
-
-using ChinookApp.Models;
+using Alyio.Extensions.Dapper.Sqlite.Tests.Models;
 
 using Dapper;
 
-namespace ChinookApp.Repositories
+namespace Alyio.Extensions.Dapper.Sqlite.Tests.Repositories
 {
     // CREATE TABLE [Genre]
     // (
@@ -25,7 +23,7 @@ namespace ChinookApp.Repositories
         {
             if (!Mapper.TryFindSelect(nameof(SelectByNameAsync), out var def))
             {
-                throw new ArgumentException($"The given id '{nameof(SelectByNameAsync)}' was not present in the mapper.");
+                throw new ArgumentException($"The given id '{nameof(SelectByIdAsync)}' was not present in the mapper.");
             }
             using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
             var parameters = new DynamicParameters();

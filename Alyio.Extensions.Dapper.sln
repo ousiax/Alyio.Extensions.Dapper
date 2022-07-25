@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{69D74001-2864-4309-BEC1-AC95A2614145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alyio.Extensions.Dapper", "src\Alyio.Extensions.Dapper\Alyio.Extensions.Dapper.csproj", "{C2D3EC3A-5019-4E2E-8D89-E0E528DF05F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alyio.Extensions.Dapper.Abstractions", "src\Alyio.Extensions.Dapper.Abstractions\Alyio.Extensions.Dapper.Abstractions.csproj", "{D5FDE657-5176-4B33-B032-D602E94B2521}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alyio.Extensions.Dapper.MySql", "src\Alyio.Extensions.Dapper.MySql\Alyio.Extensions.Dapper.MySql.csproj", "{4A4847FB-0B0E-4EA2-8D86-559B555D7853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alyio.Extensions.Dapper.Sqlite", "src\Alyio.Extensions.Dapper.Sqlite\Alyio.Extensions.Dapper.Sqlite.csproj", "{50107DA5-8DE6-4F0A-B4D7-B8BC306FF768}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{19D4036E-4544-430E-BF33-7DE4E44655B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookApp", "example\ChinookApp\ChinookApp.csproj", "{3BA35A95-9F25-4BB3-A1E4-FB6DD83DFAC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B0653A8D-63BC-4742-A6BB-22731AE0C914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alyio.Extensions.Dapper.Sqlite.Tests", "test\Alyio.Extensions.Dapper.Sqlite.Tests\Alyio.Extensions.Dapper.Sqlite.Tests.csproj", "{167C8F99-7B3D-446B-946B-3B162AF92717}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2D3EC3A-5019-4E2E-8D89-E0E528DF05F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D3EC3A-5019-4E2E-8D89-E0E528DF05F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D3EC3A-5019-4E2E-8D89-E0E528DF05F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D3EC3A-5019-4E2E-8D89-E0E528DF05F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5FDE657-5176-4B33-B032-D602E94B2521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5FDE657-5176-4B33-B032-D602E94B2521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5FDE657-5176-4B33-B032-D602E94B2521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5FDE657-5176-4B33-B032-D602E94B2521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4847FB-0B0E-4EA2-8D86-559B555D7853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4847FB-0B0E-4EA2-8D86-559B555D7853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4847FB-0B0E-4EA2-8D86-559B555D7853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4847FB-0B0E-4EA2-8D86-559B555D7853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50107DA5-8DE6-4F0A-B4D7-B8BC306FF768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50107DA5-8DE6-4F0A-B4D7-B8BC306FF768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50107DA5-8DE6-4F0A-B4D7-B8BC306FF768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50107DA5-8DE6-4F0A-B4D7-B8BC306FF768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BA35A95-9F25-4BB3-A1E4-FB6DD83DFAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA35A95-9F25-4BB3-A1E4-FB6DD83DFAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA35A95-9F25-4BB3-A1E4-FB6DD83DFAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA35A95-9F25-4BB3-A1E4-FB6DD83DFAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167C8F99-7B3D-446B-946B-3B162AF92717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167C8F99-7B3D-446B-946B-3B162AF92717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167C8F99-7B3D-446B-946B-3B162AF92717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167C8F99-7B3D-446B-946B-3B162AF92717}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEB0BB1D-AC8E-4DB8-88B3-2D9E1ABF6FF9}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2D3EC3A-5019-4E2E-8D89-E0E528DF05F1} = {69D74001-2864-4309-BEC1-AC95A2614145}
+		{D5FDE657-5176-4B33-B032-D602E94B2521} = {69D74001-2864-4309-BEC1-AC95A2614145}
+		{4A4847FB-0B0E-4EA2-8D86-559B555D7853} = {69D74001-2864-4309-BEC1-AC95A2614145}
+		{50107DA5-8DE6-4F0A-B4D7-B8BC306FF768} = {69D74001-2864-4309-BEC1-AC95A2614145}
+		{3BA35A95-9F25-4BB3-A1E4-FB6DD83DFAC0} = {19D4036E-4544-430E-BF33-7DE4E44655B2}
+		{167C8F99-7B3D-446B-946B-3B162AF92717} = {B0653A8D-63BC-4742-A6BB-22731AE0C914}
+	EndGlobalSection
+EndGlobal

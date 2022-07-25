@@ -1,6 +1,6 @@
 using ChinookApp.Models;
 
-using Dapper.Extensions.DataAccess;
+using Alyio.Extensions.Dapper;
 
 namespace ChinookApp.Repositories;
 

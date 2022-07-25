@@ -24,6 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Dapper.Extensions.DataAccess.Sqlite\Dapper.Extensions.DataAccess.Sqlite.csproj" />
+    <ProjectReference Include="..\..\src\Alyio.Extensions.Dapper.Sqlite\Alyio.Extensions.Dapper.Sqlite.csproj" />
   </ItemGroup>
 </Project>

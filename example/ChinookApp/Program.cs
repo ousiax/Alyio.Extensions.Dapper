@@ -1,7 +1,7 @@
 ﻿using ChinookApp.Models;
 using ChinookApp.Repositories;
 
-using Dapper.Extensions.DataAccess;
+using Alyio.Extensions.Dapper;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

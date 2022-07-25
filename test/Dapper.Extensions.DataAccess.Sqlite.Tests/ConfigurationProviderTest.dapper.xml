@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    <mappers>
-        <mapper type="Dapper.Extensions.DataAccess.Sqlite.Tests.Models.MediaType, Dapper.Extensions.DataAccess.Sqlite.Tests"></mapper>
-    </mappers>
-</configuration>

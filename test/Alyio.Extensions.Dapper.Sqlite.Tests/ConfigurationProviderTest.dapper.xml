@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <mappers>
+    <mapper type="Alyio.Extensions.Dapper.Sqlite.Tests.Models.MediaType, Alyio.Extensions.Dapper.Sqlite.Tests"></mapper>
+  </mappers>
+</configuration>
