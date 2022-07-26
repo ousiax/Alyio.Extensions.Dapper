@@ -61,11 +61,27 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
         }
 
         [Fact]
-        public async Task TestGenreRepositoryAsync()
+        public async Task TestGenreRepositorySelectByNameAsync()
         {
             var genres = Services.GetRequiredService<IGenreRepository>();
             var rock = await genres.SelectByNameAsync("Comedy");
             Assert.Equal("Comedy", rock.Name);
+        }
+
+        [Fact]
+        public async Task TestGenreRepositoryPageSelectAllAsync()
+        {
+            var genres = Services.GetRequiredService<IGenreRepository>();
+            var (pageCount, results) = await genres.PageSelectAllAsync(-2, 10);
+            Assert.Equal(10, results.Count());
+            Assert.Equal(3, pageCount);
+
+            var exception = await Assert.ThrowsAsync<ArgumentException>(() =>
+            {
+                return genres.PageSelectAllAsync(0, -5);
+            });
+
+            Assert.Equal("The pageSize must be greater than zero.", exception.Message);
         }
     }
 }

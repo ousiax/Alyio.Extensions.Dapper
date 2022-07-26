@@ -11,5 +11,7 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests.Repositories
     public interface IGenreRepository : IRepository<Genre, int>
     {
         Task<Genre> SelectByNameAsync(string name, CancellationToken cancellationToken = default);
+
+        Task<(int pageCount, IEnumerable<Genre>)> PageSelectAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
     }
 }
