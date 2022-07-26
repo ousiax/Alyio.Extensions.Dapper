@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// <summary>
     /// Extension methods for <see cref="SelectDefinition"/>.
     /// </summary>
-    public static class PageableSelectDefinitionExtensions
+    internal static class PageableSelectDefinitionExtensions
     {
         private static readonly string PageableTextForamt = "SELECT COUNT(*) FROM ({0}) original_query; {0} LIMIT {1} OFFSET {2};";
 
