@@ -9,7 +9,8 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
-    <Version>1.1.0</Version>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionSuffix>alpha01</VersionSuffix>
     <Authors>XU</Authors>
     <Copyright>Copyright (c) 2022 XU</Copyright>
     <PackageProjectUrl>https://github.com/qqbuby/Alyio.Extensions.Dapper</PackageProjectUrl>
