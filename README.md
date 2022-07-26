@@ -126,6 +126,34 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
     }
     ```
 
+## How to write a page query?
+
+To write a pageable query, you cloud define a multiple result mapper in a single query, for example the follow `SelectPageAsync`:
+
+ ```xml
+ <?xml version="1.0" encoding="UTF-8"?>
+ <mapper>
+   <select id="SelectAllAsync">SELECT GenreId, Name FROM Genre</select>
+   <select id="SelectPageAsync">SELECT COUNT(*) FROM Genre;SELECT GenreId, Name FROM Genre LIMIT @LIMIT OFFSET @OFFSET;</select>
+ </mapper>
+ ```
+or define a simple select sql statement, and convert it as a pageable select sql defintion:
+
+```cs
+SelectDefinition def ....
+def = def.AsPageable(pageNumber, pageSize);
+```
+
+then invoke the dapper extenstion method `QueryMultipleAsync` as below:
+
+```cs
+using var multi = await conn.QueryMultipleAsync(...).ConfigureAwait(false);
+var count = await multi.ReadSingleAsync<int>();
+var results = await multi.ReadAsync<Genre>();
+var pageCount = (int)Math.Ceiling((double)count / pageSize);
+return (pageCount, results);
+```
+
 ## There is also an example at _exmaple/ChinookApp_:
 
 ```cs
