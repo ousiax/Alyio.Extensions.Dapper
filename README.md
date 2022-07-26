@@ -47,28 +47,14 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
     ```cs
     public class GenreRepository : Repository<Genre, int>, IGenreRepository
     {
-        public GenreRepository(
-            IConnectionFactory connectionFactory,
-            IMapperDefinitionProvider<Genre, int> mapperProvider) : base(connectionFactory, mapperProvider)
-        {
-        }
+        // ctor ...
 
-        public async Task<Genre> SelectByNameAsync(string name, CancellationToken cancellationToken = default)
+        public async Task<Genre?> SelectByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (!Mapper.TryFindSelect(nameof(SelectByNameAsync), out var def))
-            {
-                throw new ArgumentException($"The given id '{nameof(SelectByNameAsync)}' was not present in the mapper.");
-            }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
             var parameters = new DynamicParameters();
             parameters.Add(nameof(Genre.Name), name);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: parameters,
-                cancellationToken: cancellationToken);
-            return await conn.QuerySingleOrDefaultAsync<Genre>(cmdDef).ConfigureAwait(false);
+            var genres = await Store.QueryAsync<Genre>(nameof(SelectByNameAsync), parameters, cancellationToken).ConfigureAwait(false);
+            return genres.FirstOrDefault();
         }
 
         public async Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
@@ -126,23 +112,16 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
     }
     ```
 
-## How to write a page query?
+## How to write a pageable query?
 
 To write a pageable query, you cloud define a multiple result mapper in a single query, for example the follow `SelectPageAsync`:
 
  ```xml
  <?xml version="1.0" encoding="UTF-8"?>
  <mapper>
-   <select id="SelectAllAsync">SELECT GenreId, Name FROM Genre</select>
    <select id="SelectPageAsync">SELECT COUNT(*) FROM Genre;SELECT GenreId, Name FROM Genre LIMIT @LIMIT OFFSET @OFFSET;</select>
  </mapper>
  ```
-or define a simple select sql statement, and convert it as a pageable select sql defintion:
-
-```cs
-SelectDefinition def ....
-def = def.AsPageable(pageNumber, pageSize);
-```
 
 then invoke the dapper extenstion method `QueryMultipleAsync` as below:
 
@@ -153,6 +132,22 @@ var results = await multi.ReadAsync<Genre>();
 var pageCount = (int)Math.Ceiling((double)count / pageSize);
 return (pageCount, results);
 ```
+
+You can also define a simple select sql statement, and invoke `IStoreService.PageQueryAsync` directly:
+
+ ```xml
+ <?xml version="1.0" encoding="UTF-8"?>
+ <mapper>
+   <select id="SelectAllAsync">SELECT GenreId, Name FROM Genre</select>
+ </mapper>
+ ```
+
+ ```cs
+public Task<(int totalCount, IEnumerable<Genre>)> PageSelectAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+{
+    return Store.PageQueryAsync<Genre>(nameof(SelectAllAsync), pageNumber, pageSize, cancellationToken);
+}
+ ```
 
 ## There is also an example at _exmaple/ChinookApp_:
 
