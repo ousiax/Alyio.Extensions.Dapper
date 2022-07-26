@@ -1,6 +1,6 @@
 ﻿namespace Alyio.Extensions.Dapper.Sqlite.Tests
 {
-    public class PageableSelectDefinitionExtensionsTests
+    public class PageableSelectDefinitionExtensionsTest
     {
         [Fact]
         public Task TestThrowArgumentExceptionAsync()
