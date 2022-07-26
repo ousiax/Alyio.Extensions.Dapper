@@ -15,28 +15,31 @@ namespace ChinookApp.Repositories
     ///
     public class GenreRepository : Repository<Genre, int>, IGenreRepository
     {
+        /// <summary>
+        /// Gets a <see cref="IConnectionFactory"/>.
+        /// </summary>
+        private IConnectionFactory ConnectionFactory { get; }
+
+        /// <summary>
+        /// Gets a <see cref="IMapperDefinitionProvider{TEntity, TId}"/>.
+        /// </summary>
+        private IMapperDefinitionProvider<Genre, int> Mapper { get; }
+
         public GenreRepository(
             IConnectionFactory connectionFactory,
-            IMapperDefinitionProvider<Genre, int> mapperProvider) : base(connectionFactory, mapperProvider)
+            IMapperDefinitionProvider<Genre, int> mapperProvider,
+            IStoreService<Genre, int> storeService) : base(storeService)
         {
+            ConnectionFactory = connectionFactory;
+            Mapper = mapperProvider;
         }
 
-        public async Task<Genre> SelectByNameAsync(string name, CancellationToken cancellationToken = default)
+        public async Task<Genre?> SelectByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (!Mapper.TryFindSelect(nameof(SelectByNameAsync), out var def))
-            {
-                throw new ArgumentException($"The given id '{nameof(SelectByNameAsync)}' was not present in the mapper.");
-            }
-            using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
             var parameters = new DynamicParameters();
             parameters.Add(nameof(Genre.Name), name);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: parameters,
-                cancellationToken: cancellationToken);
-            return await conn.QuerySingleOrDefaultAsync<Genre>(cmdDef).ConfigureAwait(false);
+            var genres = await Store.QueryAsync<Genre>(nameof(SelectByNameAsync), parameters, cancellationToken).ConfigureAwait(false);
+            return genres.FirstOrDefault();
         }
 
         public async Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)

@@ -12,7 +12,7 @@ namespace ChinookApp.Repositories
     // );
     public interface IGenreRepository : IRepository<Genre, int>
     {
-        Task<Genre> SelectByNameAsync(string name, CancellationToken cancellationToken = default);
+        Task<Genre?> SelectByNameAsync(string name, CancellationToken cancellationToken = default);
 
         Task<(int pageCount, IEnumerable<Genre> resultSet)> SelectPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
     }

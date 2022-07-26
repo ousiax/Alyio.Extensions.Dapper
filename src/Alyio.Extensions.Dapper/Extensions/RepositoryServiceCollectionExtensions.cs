@@ -22,6 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddSingleton(typeof(IConfigurationProvider), new ConfigurationProvider(configurationPath));
             services.AddSingleton(typeof(IMapperDefinitionProvider<,>), typeof(MapperDefinitionProvider<,>))
+                .AddScoped(typeof(IStoreService<,>), typeof(StoreService<,>))
                 .AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
             return services;
         }

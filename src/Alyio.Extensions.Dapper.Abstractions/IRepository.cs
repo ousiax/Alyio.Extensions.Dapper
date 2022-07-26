@@ -14,7 +14,7 @@
         /// <param name="id">The id (i.e. primary key) of the <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
         /// <returns>An instance of type <typeparamref name="TEntity"/>, or null if the query returns empty.</returns>
-        Task<TEntity> SelectByIdAsync(TId id, CancellationToken cancellationToken = default);
+        Task<TEntity?> SelectByIdAsync(TId id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Execute a query and return a sequence of data of <typeparamref name="TEntity"/>.

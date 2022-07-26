@@ -16,7 +16,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddMySqlDataAccess(this IServiceCollection services, string configurationPath = "dapper.xml")
         {
             services.AddRepository(configurationPath)
-                .AddSingleton<IConnectionFactory, MySqlConnectionFactory>();
+                .AddSingleton<IConnectionFactory, MySqlConnectionFactory>()
+                .AddScoped(typeof(IStoreService<,>), typeof(MySqlStoreService<,>));
 
             return services;
         }
