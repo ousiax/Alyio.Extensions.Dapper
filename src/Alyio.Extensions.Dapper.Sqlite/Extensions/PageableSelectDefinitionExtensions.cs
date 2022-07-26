@@ -33,7 +33,7 @@ namespace Alyio.Extensions.Dapper
 
             if (def.CommandType != CommandType.Text)
             {
-                throw new InvalidCastException($"The command type of {nameof(def)} must be CommandType.Text");
+                throw new InvalidCastException($"The command type of {nameof(def)} must be CommandType.Text.");
             }
 
             var pageable = new SelectDefinition
