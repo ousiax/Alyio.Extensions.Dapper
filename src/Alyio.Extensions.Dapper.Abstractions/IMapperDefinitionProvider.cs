@@ -4,7 +4,7 @@
     /// Represents the definition of mapped SQL statements.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity mapped to relation database.</typeparam>
-    /// <typeparam name="TId">The ID (i.e. primary key) type of the entitty.</typeparam>
+    /// <typeparam name="TId">The ID (i.e. primary key) type of the entity.</typeparam>
     public interface IMapperDefinitionProvider<TEntity, TId> where TEntity : class, new()
     {
         /// <summary>

@@ -6,7 +6,7 @@ namespace Alyio.Extensions.Dapper
     /// Represents a generic repository implementation.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity mapped to relation database.</typeparam>
-    /// <typeparam name="TId">The ID (i.e. primary key) type of the entitty.</typeparam>
+    /// <typeparam name="TId">The ID (i.e. primary key) type of the entity.</typeparam>
     public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, new()
     {
         /// <summary>
