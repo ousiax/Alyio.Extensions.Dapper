@@ -101,7 +101,8 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
             using var multi = await conn.QueryMultipleAsync(cmdDef).ConfigureAwait(false);
             var count = await multi.ReadSingleAsync<int>();
             var results = await multi.ReadAsync<Genre>();
-            return (count / pageSize, results);
+            var pageCount = (int)Math.Ceiling((double)count / pageSize);
+            return (pageCount, results);
         }
     }
     ```
