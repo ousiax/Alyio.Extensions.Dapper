@@ -24,7 +24,7 @@
         Task<IEnumerable<TEntity>> SelectAllAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Inserts a instance of type <typeparamref name="TEntity"/> into relation database.
+        /// Inserts an instance of type <typeparamref name="TEntity"/> into relation database.
         /// </summary>
         /// <param name="entity">A entity instance of type <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
@@ -32,7 +32,7 @@
         Task<int> InsertAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Deletes a instance of type <typeparamref name="TEntity"/> from relation database by primary key <paramref name="id"/>.
+        /// Deletes an instance of type <typeparamref name="TEntity"/> from relation database by primary key <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The id (i.e. primary key) of the <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
@@ -40,7 +40,7 @@
         Task<int> DeleteAsync(TId id, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Updates a instance of type <typeparamref name="TEntity"/> in the relation database.
+        /// Updates an instance of type <typeparamref name="TEntity"/> in the relation database.
         /// </summary>
         /// <param name="entity">A entity instance of type <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
