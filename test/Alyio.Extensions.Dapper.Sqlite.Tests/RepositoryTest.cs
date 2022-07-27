@@ -32,7 +32,7 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             // select all
             var genres = await genreRepo.SelectAllAsync();
 
-            Assert.Equal(25, genres.Count());
+            Assert.True(genres.Count() >= 25);
 
             // select by id
             var genre = await genreRepo.SelectByIdAsync(1);
