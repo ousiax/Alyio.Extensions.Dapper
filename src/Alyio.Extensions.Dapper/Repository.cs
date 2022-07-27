@@ -42,7 +42,7 @@
         /// <inheritdoc/>
         public Task<int> DeleteAsync(TId id, CancellationToken cancellationToken = default)
         {
-            return Store.DeleteByIdAsync(nameof(InsertAsync), id, cancellationToken: cancellationToken);
+            return Store.DeleteByIdAsync(nameof(DeleteAsync), id, cancellationToken: cancellationToken);
         }
 
         /// <inheritdoc/>
