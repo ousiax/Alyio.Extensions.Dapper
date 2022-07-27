@@ -60,6 +60,7 @@
         /// <param name="id">The id (i.e. primary key) of the <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
         /// <returns>The number of rows affected.</returns>
+        /// <exception cref="ArgumentException">The <see cref="SelectDefinition.IdName"/> is null or empty.</exception>
         Task<int> DeleteByIdAsync(string sqlDefId, TId id, CancellationToken cancellationToken = default);
 
         /// <summary>
