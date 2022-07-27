@@ -25,6 +25,34 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             Services = app.Services;
         }
 
+        [Theory]
+        [InlineData("TestMapperIdNotFoundArgumentExceptionAsync")]
+        public async Task TestMapperIdNotFoundArgumentExceptionAsync(string sqlDefId)
+        {
+            var store = Services.GetRequiredService<IStoreService<Genre, int>>();
+
+            var argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.QuerySingleOrDefaultByIdAsync<Genre>(sqlDefId, 0));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.QueryAsync<Genre>(sqlDefId, 0));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.InsertAsync(sqlDefId, 0));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.UpdateAsync(sqlDefId, 0));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.DeleteAsync(sqlDefId, 0));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.DeleteByIdAsync(sqlDefId, 0));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.PageQueryAsync<Genre>(sqlDefId, 0, 10));
+            Assert.Contains("not present in the mapper.", argumentException.Message);
+        }
+
         [Fact]
         public async Task TestQuerySingleOrDefaultByIdAsync()
         {
@@ -86,12 +114,27 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
 
             Assert.Equal(totalCount1, totalCount2);
             Assert.Equal(results1.Count(), results2.Count());
+        }
 
-            var argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.PageQueryAsync<Genre>("PageSelectAsync", 0, -1));
-            Assert.Contains("must be greater than zero.", argumentException.Message);
+
+        [Fact]
+        public async Task TestPageQueryThrowInvalidCastExceptionAsync()
+        {
+            var store = Services.GetRequiredService<IStoreService<Genre, int>>();
 
             var invalidCastException = await Assert.ThrowsAsync<InvalidCastException>(() => store.PageQueryAsync<Genre>("InvalidOpeartionPageSelectAsync", 0, 1));
             Assert.Contains("must be CommandType.Text.", invalidCastException.Message);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task TestPageQueryThrowArgumentExceptionAsync(int pageSize)
+        {
+            var store = Services.GetRequiredService<IStoreService<Genre, int>>();
+            var argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.PageQueryAsync<Genre>("PageSelectAsync", 0, pageSize));
+
+            Assert.Contains("must be greater than zero.", argumentException.Message);
         }
     }
 }
