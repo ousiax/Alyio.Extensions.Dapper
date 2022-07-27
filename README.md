@@ -96,7 +96,7 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
 3. Set up the generic repository services in IoC container.
 
     ```cs
-    services.AddMySqlDataAccess();
+    services.AddMySqlStore();
     services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
     services.AddScoped<IGenreRepository, GenreRepository>();
     ```
@@ -149,7 +149,7 @@ public Task<(int totalCount, IEnumerable<Genre>)> PageSelectAllAsync(int pageNum
 }
  ```
 
-## There is also an example at _exmaple/ChinookApp_:
+## There is also an example at `exmaple/ChinookApp`:
 
 ```cs
 // using statements ...
@@ -161,7 +161,7 @@ host.ConfigureAppConfiguration(builder => builder.AddUserSecrets(typeof(Program)
 
 host.ConfigureServices((context, services) =>
 {
-    services.AddMySqlDataAccess();
+    services.AddMySqlStore();
     services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
     services.AddScoped<IGenreRepository, GenreRepository>();
 });
