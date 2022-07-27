@@ -152,5 +152,27 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
 
             Assert.Contains("must be greater than zero.", argumentException.Message);
         }
+
+        [Theory]
+        [InlineData("IdNameIsNullSelectByIdAsync")]
+        [InlineData("IdNameIsEmptySelectByIdAsync")]
+        public async Task TestIdNameSelectByIdThrowArgumentExceptionAsync(string sqlDefId)
+        {
+            var store = Services.GetRequiredService<IStoreService<Genre, int>>();
+            var argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.QuerySingleOrDefaultByIdAsync<Genre>(sqlDefId, 0));
+
+            Assert.Equal("The IdName is null or empty.", argumentException.Message);
+        }
+
+        [Theory]
+        [InlineData("IdNameIsNullDeleteByIdAsync")]
+        [InlineData("IdNameIsEmptyDeleteByIdAsync")]
+        public async Task TestIdNameDeleteByIdThrowArgumentExceptionAsync(string sqlDefId)
+        {
+            var store = Services.GetRequiredService<IStoreService<Genre, int>>();
+            var argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.DeleteByIdAsync(sqlDefId, 0));
+
+            Assert.Equal("The IdName is null or empty.", argumentException.Message);
+        }
     }
 }
