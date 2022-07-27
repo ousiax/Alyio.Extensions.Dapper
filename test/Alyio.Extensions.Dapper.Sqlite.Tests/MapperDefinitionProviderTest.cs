@@ -10,7 +10,7 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             var host = Host.CreateDefaultBuilder();
             host.ConfigureServices((context, services) =>
             {
-                services.AddSqliteDataAccess(configurationPath: "MapperDefinitionProviderTest.dapper.xml");
+                services.AddSqliteStore(configurationPath: "MapperDefinitionProviderTest.dapper.xml");
                 services.Configure<SqliteConnectionOptions>(context.Configuration.GetSection(nameof(SqliteConnectionOptions)));
             });
             var app = host.Build();

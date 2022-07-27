@@ -13,9 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
         /// <param name="configurationPath">The path of dapper configuration. Default is `dapper.xml`.</param>
         /// <returns> A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, string configurationPath = "dapper.xml")
+        public static IServiceCollection AddSqliteStore(this IServiceCollection services, string configurationPath = "dapper.xml")
         {
-            services.AddRepository(configurationPath)
+            services.AddDapper(configurationPath)
                 .AddSingleton<IConnectionFactory, SqliteConnectionFactory>()
                 .AddScoped(typeof(IStoreService<,>), typeof(SqliteStoreService<,>));
 
@@ -29,9 +29,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="setupAction">The <see cref="SqliteConnectionOptions"/> configuration delegate.</param>
         /// <param name="configurationPath">The path of dapper configuration. Default is `dapper.xml`.</param>
         /// <returns> A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, Action<SqliteConnectionOptions> setupAction, string configurationPath = "dapper.xml")
+        public static IServiceCollection AddSqliteStore(this IServiceCollection services, Action<SqliteConnectionOptions> setupAction, string configurationPath = "dapper.xml")
         {
-            services.AddSqliteDataAccess(configurationPath).Configure(setupAction);
+            services.AddSqliteStore(configurationPath).Configure(setupAction);
 
             return services;
         }
