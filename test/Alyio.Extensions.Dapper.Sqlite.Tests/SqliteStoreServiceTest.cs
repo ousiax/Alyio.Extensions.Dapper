@@ -11,8 +11,15 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             var host = Host.CreateDefaultBuilder();
             host.ConfigureServices((context, services) =>
             {
-                services.AddSqliteStore(configurationPath: "SqliteStoreServiceTest.dapper.xml");
-                services.Configure<SqliteConnectionOptions>(context.Configuration.GetSection(nameof(SqliteConnectionOptions)));
+                SqliteConnectionOptions options = new();
+                context.Configuration.Bind(nameof(SqliteConnectionOptions), options);
+                //var option = services.Configure<SqliteConnectionOptions>(context.Configuration.GetSection(nameof(SqliteConnectionOptions)));
+                services.AddSqliteStore(opt =>
+                {
+                    opt.Master = options.Master;
+                    opt.Slaves = options.Slaves;
+                },
+                "SqliteStoreServiceTest.dapper.xml");
             });
             var app = host.Build();
             Services = app.Services;
@@ -30,6 +37,44 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
             var genre2 = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", -1);
 
             Assert.Null(genre2);
+        }
+
+        [Fact]
+        public async Task TestInsertAndUpdateAndDeleteByIdAsync()
+        {
+            var store = Services.GetRequiredService<IStoreService<Genre, int>>();
+            var helloGenre = new Genre { GenreId = 1_024, Name = "我很好" };
+
+            // insert
+            var rowNums = await store.InsertAsync("InsertAsync", helloGenre);
+
+            Assert.Equal(1, rowNums);
+
+            var genre = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", helloGenre.GenreId.Value);
+
+            Assert.NotNull(genre);
+            Assert.Equal(helloGenre.GenreId, genre!.GenreId);
+            Assert.Equal(helloGenre.Name, genre!.Name);
+
+            // update
+            helloGenre.Name = "你怎么样？";
+            rowNums = await store.UpdateAsync("UpdateAsync", helloGenre);
+
+            Assert.Equal(1, rowNums);
+
+            genre = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", helloGenre.GenreId.Value);
+
+            Assert.NotNull(genre);
+            Assert.Equal(helloGenre.Name, genre!.Name);
+
+            // delete
+            rowNums = await store.DeleteByIdAsync("DeleteAsync", helloGenre.GenreId.Value);
+
+            Assert.Equal(1, rowNums);
+
+            genre = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", helloGenre.GenreId.Value);
+
+            Assert.Null(genre);
         }
 
         [Fact]
