@@ -50,25 +50,6 @@ namespace Alyio.Extensions.Dapper
         }
 
         /// <inheritdoc/>
-        public async Task<T> QuerySingleByIdAsync<T>(string sqlDefId, TId id, CancellationToken cancellationToken = default)
-        {
-            if (!Mapper.TryFindSelect(sqlDefId, out var def))
-            {
-                throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
-            }
-            using var conn = await ConnectionFactory.OpenAsync(def.OpenMode).ConfigureAwait(false);
-            var param = new DynamicParameters();
-            param.Add(def.IdName, id);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: param,
-                cancellationToken: cancellationToken);
-            return await conn.QuerySingleAsync<T>(cmdDef).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc/>
         public async Task<IEnumerable<T>> QueryAsync<T>(string sqlDefId, object? param = null, CancellationToken cancellationToken = default)
         {
             if (!Mapper.TryFindSelect(sqlDefId, out var def))

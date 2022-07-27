@@ -17,16 +17,6 @@
         Task<T?> QuerySingleOrDefaultByIdAsync<T>(string sqlDefId, TId id, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Execute a single-row query by <paramref name="id"/> and return an instance of type <typeparamref name="T"/>, or throw exception if the query returns empty.
-        /// </summary>
-        /// <param name="sqlDefId">The unique identifier that can be used to reference an instance of <see cref="SelectDefinition"/>.</param>
-        /// <param name="id">The id (i.e. primary key) of the <typeparamref name="TEntity"/>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
-        /// <returns>An instance of type <typeparamref name="T"/>, or null if the query returns empty.</returns>
-        /// <exception cref="InvalidOperationException">The source sequence is empty.</exception>
-        Task<T> QuerySingleByIdAsync<T>(string sqlDefId, TId id, CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// Execute a query and return a sequence of data of <typeparamref name="T"/>.
         /// </summary>
         /// <param name="sqlDefId">The unique identifier that can be used to reference an instance of <see cref="SelectDefinition"/>.</param>
