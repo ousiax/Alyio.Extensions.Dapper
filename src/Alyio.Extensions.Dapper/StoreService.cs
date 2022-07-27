@@ -37,6 +37,12 @@ namespace Alyio.Extensions.Dapper
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
+
+            if (string.IsNullOrEmpty(def.IdName))
+            {
+                throw new ArgumentException($"The {nameof(SelectDefinition.IdName)} is null or empty.");
+            }
+
             var param = new DynamicParameters();
             param.Add(def.IdName, id);
             var results = await QueryAsync<T>(def, param, cancellationToken);
@@ -60,7 +66,10 @@ namespace Alyio.Extensions.Dapper
         /// <param name="def">A <see cref="SelectDefinition"/>.</param>
         /// <param name="param">The parameters to pass, if any.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
-        /// <returns>A sequence of data of <typeparamref name="T"/>.</returns>
+        /// <returns>
+        /// A sequence of data of <typeparamref name="T"/>; if a basic type (int, string, etc) is queried then the data from the first column in assumed, otherwise an instance is
+        /// created per row, and a direct column-name===member-name mapping is assumed (case insensitive).
+        /// </returns>
         protected async Task<IEnumerable<T>> QueryAsync<T>(SelectDefinition def, object? param = null, CancellationToken cancellationToken = default)
         {
             using var conn = await ConnectionFactory.OpenAsync(def.OpenMode).ConfigureAwait(false);
@@ -103,6 +112,11 @@ namespace Alyio.Extensions.Dapper
             if (!Mapper.TryFindDelete(sqlDefId, out var def))
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
+            }
+
+            if (string.IsNullOrEmpty(def.IdName))
+            {
+                throw new ArgumentException($"The {nameof(SelectDefinition.IdName)} is null or empty.");
             }
 
             var param = new DynamicParameters();

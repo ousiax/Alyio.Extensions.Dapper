@@ -13,7 +13,11 @@
         /// <param name="sqlDefId">The unique identifier that can be used to reference an instance of <see cref="SelectDefinition"/>.</param>
         /// <param name="id">The id (i.e. primary key) of the <typeparamref name="TEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
-        /// <returns>An instance of type <typeparamref name="T"/>, or null if the query returns empty.</returns>
+        /// <returns>
+        /// An instance of type <typeparamref name="T"/>; if a basic type (int, string, etc) is queried then the data from the first column in assumed, otherwise an instance is
+        /// created per row, and a direct column-name===member-name mapping is assumed (case insensitive), or default(T) if the query returns empty.
+        /// </returns>
+        /// <exception cref="ArgumentException">The <see cref="SelectDefinition.IdName"/> is null or empty.</exception>
         Task<T?> QuerySingleOrDefaultByIdAsync<T>(string sqlDefId, TId id, CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -22,7 +26,10 @@
         /// <param name="sqlDefId">The unique identifier that can be used to reference an instance of <see cref="SelectDefinition"/>.</param>
         /// <param name="param">The parameters to pass, if any.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
-        /// <returns>A sequence of data of <typeparamref name="T"/>.</returns>
+        /// <returns>
+        /// A sequence of data of <typeparamref name="T"/>; if a basic type (int, string, etc) is queried then the data from the first column in assumed, otherwise an instance is
+        /// created per row, and a direct column-name===member-name mapping is assumed (case insensitive).
+        /// </returns>
         Task<IEnumerable<T>> QueryAsync<T>(string sqlDefId, object? param = null, CancellationToken cancellationToken = default);
 
         /// <summary>
