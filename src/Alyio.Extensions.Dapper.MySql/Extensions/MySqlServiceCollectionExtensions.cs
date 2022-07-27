@@ -13,9 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
         /// <param name="configurationPath">The path of dapper configuration. Default is `dapper.xml`.</param>
         /// <returns> A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddMySqlDataAccess(this IServiceCollection services, string configurationPath = "dapper.xml")
+        public static IServiceCollection AddMySqlStore(this IServiceCollection services, string configurationPath = "dapper.xml")
         {
-            services.AddRepository(configurationPath)
+            services.AddDapper(configurationPath)
                 .AddSingleton<IConnectionFactory, MySqlConnectionFactory>()
                 .AddScoped(typeof(IStoreService<,>), typeof(MySqlStoreService<,>));
 
@@ -29,9 +29,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="setupAction">The <see cref="MySqlConnectionOptions"/> configuration delegate.</param>
         /// <param name="configurationPath">The path of dapper configuration. Default is `dapper.xml`.</param>
         /// <returns> A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddMySqlDataAccess(this IServiceCollection services, Action<MySqlConnectionOptions> setupAction, string configurationPath = "dapper.xml")
+        public static IServiceCollection AddMySqlStore(this IServiceCollection services, Action<MySqlConnectionOptions> setupAction, string configurationPath = "dapper.xml")
         {
-            services.AddMySqlDataAccess(configurationPath).Configure(setupAction);
+            services.AddMySqlStore(configurationPath).Configure(setupAction);
 
             return services;
         }

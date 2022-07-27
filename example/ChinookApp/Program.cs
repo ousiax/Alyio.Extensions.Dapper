@@ -16,7 +16,7 @@ host.ConfigureAppConfiguration(builder => builder.AddUserSecrets(typeof(Program)
 
 host.ConfigureServices((context, services) =>
 {
-    services.AddMySqlDataAccess();
+    services.AddMySqlStore();
     services.Configure<MySqlConnectionOptions>(context.Configuration.GetSection(nameof(MySqlConnectionOptions)));
     services.AddScoped<IGenreRepository, GenreRepository>();
 });
