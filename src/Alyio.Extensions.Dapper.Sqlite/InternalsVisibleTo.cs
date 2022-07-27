@@ -1,1 +1,0 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Alyio.Extensions.Dapper.Sqlite.Tests")]
