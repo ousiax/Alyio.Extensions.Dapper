@@ -34,6 +34,9 @@ dotnet_diagnostic.IDE0008.severity = suggestion
 # IDE0053: Use conditional expression for assignment
 dotnet_diagnostic.IDE0045.severity = suggestion
 
+# IDE0046: Convert to conditional expression
+dotnet_diagnostic.IDE0046.severity = suggestion
+
 # IDE0053: Use expression body for lambda expressions
 dotnet_diagnostic.IDE0053.severity = suggestion
 

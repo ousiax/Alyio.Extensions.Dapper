@@ -37,25 +37,32 @@ namespace Alyio.Extensions.Dapper
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync(def.OpenMode).ConfigureAwait(false);
             var param = new DynamicParameters();
             param.Add(def.IdName, id);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: param,
-                cancellationToken: cancellationToken);
-            return await conn.QuerySingleOrDefaultAsync<T>(cmdDef).ConfigureAwait(false);
+            var results = await QueryAsync<T>(def, param, cancellationToken);
+            return results.FirstOrDefault();
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<T>> QueryAsync<T>(string sqlDefId, object? param = null, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<T>> QueryAsync<T>(string sqlDefId, object? param = null, CancellationToken cancellationToken = default)
         {
             if (!Mapper.TryFindSelect(sqlDefId, out var def))
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
+
+            return QueryAsync<T>(def, param, cancellationToken);
+        }
+
+        /// <summary>
+        /// Execute a query and return a sequence of data of <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="def">A <see cref="SelectDefinition"/>.</param>
+        /// <param name="param">The parameters to pass, if any.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
+        /// <returns>A sequence of data of <typeparamref name="T"/>.</returns>
+        protected async Task<IEnumerable<T>> QueryAsync<T>(SelectDefinition def, object? param = null, CancellationToken cancellationToken = default)
+        {
             using var conn = await ConnectionFactory.OpenAsync(def.OpenMode).ConfigureAwait(false);
             var cmdDef = new CommandDefinition(
                 commandText: def.CommandText,
@@ -73,12 +80,13 @@ namespace Alyio.Extensions.Dapper
         }
 
         /// <inheritdoc/>
-        public async Task<int> InsertAsync(string sqlDefId, object? param, CancellationToken cancellationToken = default)
+        public async Task<int> InsertAsync(string sqlDefId, object? param = null, CancellationToken cancellationToken = default)
         {
             if (!Mapper.TryFindInsert(sqlDefId, out var def))
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
+
             using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
             var cmdDef = new CommandDefinition(
                 commandText: def.CommandText,
@@ -90,31 +98,31 @@ namespace Alyio.Extensions.Dapper
         }
 
         /// <inheritdoc/>
-        public async Task<int> DeleteByIdAsync(string sqlDefId, TId id, CancellationToken cancellationToken = default)
+        public Task<int> DeleteByIdAsync(string sqlDefId, TId id, CancellationToken cancellationToken = default)
         {
             if (!Mapper.TryFindDelete(sqlDefId, out var def))
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
-            using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
+
             var param = new DynamicParameters();
             param.Add(def.IdName, id);
-            var cmdDef = new CommandDefinition(
-                commandText: def.CommandText,
-                commandTimeout: def.CommandTimeout,
-                commandType: def.CommandType,
-                parameters: param,
-                cancellationToken: cancellationToken);
-            return await conn.ExecuteAsync(cmdDef).ConfigureAwait(false);
+            return DeleteAsync(def, param, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public async Task<int> DeleteAsync(string sqlDefId, object? param, CancellationToken cancellationToken = default)
+        public Task<int> DeleteAsync(string sqlDefId, object? param = null, CancellationToken cancellationToken = default)
         {
             if (!Mapper.TryFindDelete(sqlDefId, out var def))
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
+
+            return DeleteAsync(def, param, cancellationToken);
+        }
+
+        private async Task<int> DeleteAsync(DeleteDefinition def, object? param = null, CancellationToken cancellationToken = default)
+        {
             using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
 
             var cmdDef = new CommandDefinition(
@@ -127,12 +135,13 @@ namespace Alyio.Extensions.Dapper
         }
 
         /// <inheritdoc/>
-        public async Task<int> UpdateAsync(string sqlDefId, object? param, CancellationToken cancellationToken = default)
+        public async Task<int> UpdateAsync(string sqlDefId, object? param = null, CancellationToken cancellationToken = default)
         {
             if (!Mapper.TryFindUpdate(sqlDefId, out var def))
             {
                 throw new ArgumentException($"The given id '{sqlDefId}' was not present in the mapper.");
             }
+
             using var conn = await ConnectionFactory.OpenAsync(OpenMode.ReadWrite).ConfigureAwait(false);
             var cmdDef = new CommandDefinition(
                 commandText: def.CommandText,

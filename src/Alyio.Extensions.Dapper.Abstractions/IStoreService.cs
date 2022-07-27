@@ -35,7 +35,7 @@
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
         /// <returns>A binary tuple of total cound and a sequence of data of <typeparamref name="T"/>.</returns>
         /// <exception cref="ArgumentException">The page size must be greater than zero.</exception>
-        Task<(int totalCount, IEnumerable<T> results)> PageQueryAsync<T>(string sqlDefId, int pageNumber, int pageSize, object? param, CancellationToken cancellationToken = default);
+        Task<(int totalCount, IEnumerable<T> results)> PageQueryAsync<T>(string sqlDefId, int pageNumber, int pageSize, object? param = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Inserts an instance of type <typeparamref name="TEntity"/> into relation database.
@@ -44,7 +44,7 @@
         /// <param name="param">The parameters to pass, if any.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
         /// <returns>The number of rows affected.</returns>
-        Task<int> InsertAsync(string sqlDefId, object? param, CancellationToken cancellationToken = default);
+        Task<int> InsertAsync(string sqlDefId, object? param = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an instance of type <typeparamref name="TEntity"/> from relation database by primary key <paramref name="id"/>.
@@ -62,7 +62,7 @@
         /// <param name="param">The parameters to pass, if any.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
         /// <returns>The number of rows affected.</returns>
-        Task<int> DeleteAsync(string sqlDefId, object? param, CancellationToken cancellationToken = default);
+        Task<int> DeleteAsync(string sqlDefId, object? param = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates an instance of type <typeparamref name="TEntity"/> in the relation database.
@@ -71,6 +71,6 @@
         /// <param name="param">The parameters to pass, if any.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
         /// <returns>The number of rows affected.</returns>
-        Task<int> UpdateAsync(string sqlDefId, object? param, CancellationToken cancellationToken = default);
+        Task<int> UpdateAsync(string sqlDefId, object? param = null, CancellationToken cancellationToken = default);
     }
 }
