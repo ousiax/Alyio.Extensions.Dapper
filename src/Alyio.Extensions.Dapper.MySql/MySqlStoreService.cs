@@ -41,8 +41,8 @@ namespace Alyio.Extensions.Dapper
                 cancellationToken: cancellationToken);
             using var conn = await ConnectionFactory.OpenAsync().ConfigureAwait(false);
             using var multi = await conn.QueryMultipleAsync(cmdDef).ConfigureAwait(false);
-            var totalCount = await multi.ReadSingleAsync<int>();
-            var results = await multi.ReadAsync<T>();
+            var totalCount = await multi.ReadSingleAsync<int>().ConfigureAwait(false);
+            var results = await multi.ReadAsync<T>().ConfigureAwait(false);
             return (totalCount, results);
         }
 
