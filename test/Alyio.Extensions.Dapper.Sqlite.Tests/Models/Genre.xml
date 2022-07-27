@@ -2,6 +2,7 @@
 <mapper>
   <select id="SelectByIdAsync" idName="GenreId" commandType="Text" openMode="ReadWrite">SELECT GenreId, Name FROM Genre WHERE GenreId = @GenreId</select>
   <select id="SelectByNameAsync" openMode="ReadOnly">SELECT GenreId, Name FROM Genre WHERE Name = @Name</select>
+  <select id="SelectNameByIdAsync" idName="GenreId">SELECT Name FROM Genre WHERE GenreId = @GenreId</select>
   <select id="SelectAllAsync">SELECT GenreId, Name FROM Genre</select>
   <select id="PageSelectAsync">SELECT GenreId, Name FROM Genre</select>
   <select id="InvalidOpeartionPageSelectAsync" commandType="StoredProcedure">SELECT GenreId, Name FROM Genre</select>

@@ -30,27 +30,29 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
         public async Task TestMapperIdNotFoundArgumentExceptionAsync(string sqlDefId)
         {
             var store = Services.GetRequiredService<IStoreService<Genre, int>>();
+            const string expectedSubstring = "not present in the mapper.";
 
             var argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.QuerySingleOrDefaultByIdAsync<Genre>(sqlDefId, 0));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+
+            Assert.Contains(expectedSubstring, argumentException.Message);
 
             argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.QueryAsync<Genre>(sqlDefId, 0));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+            Assert.Contains(expectedSubstring, argumentException.Message);
 
             argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.InsertAsync(sqlDefId, 0));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+            Assert.Contains(expectedSubstring, argumentException.Message);
 
             argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.UpdateAsync(sqlDefId, 0));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+            Assert.Contains(expectedSubstring, argumentException.Message);
 
             argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.DeleteAsync(sqlDefId, 0));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+            Assert.Contains(expectedSubstring, argumentException.Message);
 
             argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.DeleteByIdAsync(sqlDefId, 0));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+            Assert.Contains(expectedSubstring, argumentException.Message);
 
             argumentException = await Assert.ThrowsAsync<ArgumentException>(() => store.PageQueryAsync<Genre>(sqlDefId, 0, 10));
-            Assert.Contains("not present in the mapper.", argumentException.Message);
+            Assert.Contains(expectedSubstring, argumentException.Message);
         }
 
         [Fact]
@@ -58,13 +60,27 @@ namespace Alyio.Extensions.Dapper.Sqlite.Tests
         {
             var store = Services.GetRequiredService<IStoreService<Genre, int>>();
 
-            var genre1 = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", 1);
+            var genre = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", 1);
 
-            Assert.Equal(1, genre1!.GenreId);
+            Assert.Equal(1, genre!.GenreId);
 
-            var genre2 = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", -1);
+            genre = await store.QuerySingleOrDefaultByIdAsync<Genre>("SelectByIdAsync", -1);
 
-            Assert.Null(genre2);
+            Assert.Null(genre);
+
+            var genreId = await store.QuerySingleOrDefaultByIdAsync<int>("SelectByIdAsync", 1);
+            Assert.Equal(1, genreId);
+
+            genreId = await store.QuerySingleOrDefaultByIdAsync<int>("SelectByIdAsync", -1);
+
+            Assert.Equal(default, genreId);
+
+            var genreName = await store.QuerySingleOrDefaultByIdAsync<string>("SelectNameByIdAsync", 1);
+            Assert.NotNull(genreName);
+
+            genreName = await store.QuerySingleOrDefaultByIdAsync<string>("SelectNameByIdAsync", -1);
+
+            Assert.Null(genreName);
         }
 
         [Fact]
