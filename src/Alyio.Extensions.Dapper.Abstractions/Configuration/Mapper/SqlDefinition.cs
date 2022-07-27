@@ -37,12 +37,12 @@ namespace Alyio.Extensions.Dapper
         public CommandType CommandType { get; set; } = CommandType.Text;
 
         /// <summary>
-        /// 
+        /// $"Id: {Id}, CommandTimeout: {CommandTimeout}, CommandText: {CommandText}, CommandType: {CommandType}"
         /// </summary>
-        /// <returns></returns>
+        /// <returns>$"Id: {Id}, CommandTimeout: {CommandTimeout}, CommandText: {CommandText}, CommandType: {CommandType}"</returns>
         public override string ToString()
         {
-            return $"Id: {Id}, CommandText: {CommandText}";
+            return $"Id: {Id}, CommandTimeout: {CommandTimeout}, CommandText: {CommandText}, CommandType: {CommandType}";
         }
     }
 }
