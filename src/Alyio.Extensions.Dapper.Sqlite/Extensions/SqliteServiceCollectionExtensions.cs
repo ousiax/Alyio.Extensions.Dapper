@@ -3,12 +3,12 @@
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Extension methods for setting up Sqlite generic repository services in an <see cref="IServiceCollection"/>.
+    /// Extension methods for setting up SQLite generic repository services in an <see cref="IServiceCollection"/>.
     /// </summary>
     public static class SqliteServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds Sqlite generic repository services to the specified <see cref="IServiceCollection"/>.
+        /// Adds SQLite generic repository services to the specified <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
         /// <param name="configurationPath">The path of dapper configuration. Default is `dapper.xml`.</param>
@@ -23,7 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// Adds Sqlite generic repository services to the specified <see cref="IServiceCollection"/>.
+        /// Adds SQLite generic repository services to the specified <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to add the service to.</param>
         /// <param name="setupAction">The <see cref="SqliteConnectionOptions"/> configuration delegate.</param>

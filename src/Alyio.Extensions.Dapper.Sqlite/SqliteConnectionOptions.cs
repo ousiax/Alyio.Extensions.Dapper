@@ -1,7 +1,8 @@
 ﻿namespace Alyio.Extensions.Dapper
 {
     /// <summary>
-    /// Provides programmatic configuration for the Sqlite connection strings.
+    /// Provides programmatic configuration for the SQLite connection strings.
+    /// <seealso href="https://docs.microsoft.com/en-us/dotnet/standard/data/sqlite/connection-strings"/>.
     /// </summary>
     public class SqliteConnectionOptions
     {
