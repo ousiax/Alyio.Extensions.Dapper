@@ -7,7 +7,7 @@ _Alyio.Extensions.Dapper_ provides extensions for [Dapper](https://github.com/Da
 ## Usage:
 
 ```sh
-dotnet add package Alyio.Extensions.Dapper.MySql --version 1.0.0
+dotnet add package Alyio.Extensions.Dapper.MySql --version 2.0.0-alpha01
 ```
 
 1. Define the `dapper.xml` and sql statement mapper files.
