@@ -1,6 +1,6 @@
 # Alyio.Extensions.Dapper
 
-![Build Status](https://github.com/qqbuby/Alyio.Extensions.Dapper/actions/workflows/ci.yml/badge.svg?branch=main)
+![Build Status](https://github.com/ousiax/Alyio.Extensions.Dapper/actions/workflows/ci.yml/badge.svg?branch=main)
 
 _Alyio.Extensions.Dapper_ provides extensions for [Dapper](https://github.com/DapperLib/Dapper) that implements a [repository pattern](https://martinfowler.com/eaaCatalog/repository.html).
 
@@ -114,7 +114,7 @@ dotnet add package Alyio.Extensions.Dapper.MySql --version 2.0.0-alpha01
 
 ## How to write a pageable query?
 
-To write a pageable query, you cloud define a multiple result mapper in a single query, for example the follow `SelectPageAsync`:
+To write a pageable query, you could define a multiple result mapper in a single query, for example the follow `SelectPageAsync`:
 
  ```xml
  <?xml version="1.0" encoding="UTF-8"?>
